@@ -1,14 +1,5 @@
-/*
-  ==============================================================================
-
-    This file contains the basic framework code for a JUCE plugin processor.
-
-  ==============================================================================
-*/
-
 #pragma once
 
-#include <JuceHeader.h>
 
 //==============================================================================
 /**
@@ -57,6 +48,7 @@ public:
     void setStateInformation (const void* data, int sizeInBytes) override;
 
 private:
-    //==============================================================================
+    SineOscillator oscillator;
+    
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ChromaPitchAudioProcessor)
 };

@@ -10,14 +10,17 @@
             file="Source/PluginProcessor.cpp"/>
       <FILE id="pAEpiA" name="PluginProcessor.h" compile="0" resource="0"
             file="Source/PluginProcessor.h"/>
+      <FILE id="Hq5tIC" name="Oscillator.cpp" compile="1" resource="0" file="Source/Oscillator.cpp"/>
+      <FILE id="EcDI0c" name="Oscillator.h" compile="0" resource="0" file="Source/Oscillator.h"/>
       <FILE id="bTjoAq" name="PluginEditor.cpp" compile="1" resource="0"
             file="Source/PluginEditor.cpp"/>
       <FILE id="skAzFO" name="PluginEditor.h" compile="0" resource="0" file="Source/PluginEditor.h"/>
+      <FILE id="nV2vFW" name="Headers.h" compile="0" resource="0" file="Source/Headers.h"/>
     </GROUP>
   </MAINGROUP>
   <JUCEOPTIONS JUCE_STRICT_REFCOUNTEDPOINTER="1" JUCE_VST3_CAN_REPLACE_VST2="0"/>
   <EXPORTFORMATS>
-    <XCODE_MAC targetFolder="Builds/MacOSX">
+    <XCODE_MAC targetFolder="Builds/MacOSX" microphonePermissionNeeded="1">
       <CONFIGURATIONS>
         <CONFIGURATION isDebug="1" name="Debug" targetName="Chroma Pitch"/>
         <CONFIGURATION isDebug="0" name="Release" targetName="Chroma Pitch"/>
