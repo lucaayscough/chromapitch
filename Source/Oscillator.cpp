@@ -95,6 +95,8 @@ float Oscillator::output (float phase)
 
 float Oscillator::processSample()
 {
+    updatePhaseDelta();
+    
     float sample = output (m_Phase);
     updatePhase();
     
@@ -107,6 +109,8 @@ float Oscillator::processSample()
 
 void Oscillator::processBlock()
 {
+    updatePhaseDelta();
+    
     m_Buffer.clear();
     auto* bufferData = m_Buffer.getWritePointer (0);
     
