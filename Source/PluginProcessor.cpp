@@ -84,14 +84,11 @@ void ChromaPitchAudioProcessor::changeProgramName (int index, const juce::String
 //==============================================================================
 void ChromaPitchAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
-    oscillator.prepareToPlay (440, sampleRate, samplesPerBlock);
+    oscillator.prepareToPlay(440, sampleRate, samplesPerBlock);
+    zeroCrossing.prepareToPlay(sampleRate);
 }
 
-void ChromaPitchAudioProcessor::releaseResources()
-{
-    // When playback stops, you can use this as an opportunity to free up any
-    // spare memory, etc.
-}
+void ChromaPitchAudioProcessor::releaseResources() {}
 
 #ifndef JucePlugin_PreferredChannelConfigurations
 bool ChromaPitchAudioProcessor::isBusesLayoutSupported (const BusesLayout& layouts) const
@@ -122,44 +119,18 @@ bool ChromaPitchAudioProcessor::isBusesLayoutSupported (const BusesLayout& layou
 void ChromaPitchAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midiMessages)
 {
     juce::ScopedNoDenormals noDenormals;
+    
     buffer.clear();
     
-    auto numChannels = buffer.getNumChannels();
     auto numSamples = buffer.getNumSamples();
-    
-    int numCrossings = 0;
-    bool sign = false;
     
     oscillator.processBlock();
     auto block = oscillator.getBlock();
     
     buffer.addFrom(0, 0, block, 0, 0, numSamples);
     buffer.addFrom(1, 0, block, 0, 0, numSamples);
-
-    // Detect pitch.
-    for (int channel = 0; channel < 1; ++channel)
-    {
-        auto* channelData = buffer.getWritePointer (channel);
-        
-        for (int sample = 0; sample < numSamples; ++sample)
-        {
-            if (channelData[sample] > 0.f && sign == false)
-            {
-                sign = true;
-                ++numCrossings;
-            }
-            
-            else if (channelData[sample] < 0.f && sign == true)
-            {
-                sign = false;
-                ++numCrossings;
-            }
-        }
-    }
     
-    float frequency = ((float)numCrossings / 2.f) * (getSampleRate() / (float)numSamples);
-    
-    DBG (frequency);
+    zeroCrossing.getFrequency(buffer);
 }
 
 //==============================================================================

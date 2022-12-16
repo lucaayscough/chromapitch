@@ -6,6 +6,9 @@
               pluginManufacturer="Chroma">
   <MAINGROUP id="C8k5RR" name="Chroma Pitch">
     <GROUP id="{A2A1EDFB-4B96-DCC5-B971-F8C78EF2394D}" name="Source">
+      <FILE id="ntJ3i0" name="ZeroCrossing.cpp" compile="1" resource="0"
+            file="Source/ZeroCrossing.cpp"/>
+      <FILE id="E2lHt3" name="ZeroCrossing.h" compile="0" resource="0" file="Source/ZeroCrossing.h"/>
       <FILE id="iZ0LAp" name="PluginProcessor.cpp" compile="1" resource="0"
             file="Source/PluginProcessor.cpp"/>
       <FILE id="pAEpiA" name="PluginProcessor.h" compile="0" resource="0"
@@ -16,6 +19,8 @@
             file="Source/PluginEditor.cpp"/>
       <FILE id="skAzFO" name="PluginEditor.h" compile="0" resource="0" file="Source/PluginEditor.h"/>
       <FILE id="nV2vFW" name="Headers.h" compile="0" resource="0" file="Source/Headers.h"/>
+      <FILE id="LZfFaZ" name="Averager.cpp" compile="1" resource="0" file="Source/Averager.cpp"/>
+      <FILE id="gawAjU" name="Averager.h" compile="0" resource="0" file="Source/Averager.h"/>
     </GROUP>
   </MAINGROUP>
   <JUCEOPTIONS JUCE_STRICT_REFCOUNTEDPOINTER="1" JUCE_VST3_CAN_REPLACE_VST2="0"/>
