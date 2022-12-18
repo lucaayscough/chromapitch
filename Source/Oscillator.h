@@ -11,39 +11,35 @@ public:
     virtual ~Oscillator();
     
     // Setter methods.
-    void setFrequency (float frequency);
-    void setSampleRate (float sampleRate);
-    void setBlockSize (int blockSize);
-    void setPhase (float phase);
-    void setPhaseDelta (float phaseDelta);
+    void setFrequency(float frequencyToUse);
+    void setSampleRate(float sampleRateToUse);
+    void setPhase(float phaseToUse);
+    void setPhaseDelta(float phaseDeltaToUse);
     
     // Getter methods.
     float getFrequency();
     float getSampleRate();
-    int getBlockSize();
     float getPhase();
     float getPhaseDelta();
-    juce::AudioBuffer<float>& getBlock();
     
     // Phase methods.
     void updatePhase();
     void updatePhaseDelta();
     
     // Init methods.
-    void prepareToPlay (float frequency, float sampleRate, int blockSize);
+    void prepareToPlay(float sampleRateToUse);
+    void prepareToPlay(float frequencyToUse, float sampleRateToUse);
     
     // DSP methods.
-    virtual float output (float phase);
+    virtual float output();
     float processSample();
-    void processBlock();
+    void processBlock(juce::AudioBuffer<float>& buffer);
     
 private:
-    float m_Frequency;
-    float m_SampleRate;
-    float m_BlockSize;
-    float m_Phase;
-    float m_PhaseDelta;
-    juce::AudioBuffer<float> m_Buffer;
+    float frequency = 0.f;
+    float sampleRate = 0.f;
+    float phase = 0.f;
+    float phaseDelta = 0.f;
 
 private:
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Oscillator)
@@ -59,7 +55,7 @@ public:
     SineOscillator();
     
     // DSP methods.
-    float output (float phase) override;
+    float output() override;
     
 private:
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (SineOscillator)
@@ -74,35 +70,19 @@ class SquareOscillator : public Oscillator
 public:
     SquareOscillator();
     
-    // DSP methods.
-    float output (float phase) override;
-
-private:
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (SquareOscillator)
-};
-
-
-//================================================//
-/// Pulse wave oscillator class.
-
-class PulseOscillator : public Oscillator
-{
-public:
-    PulseOscillator();
-    
     // Setter methods.
-    void setPulseWidth (float pulseWidth);
+    void setPulseWidth(float pulseWidthToUse);
     
     // Getter methods.
     float getPulseWidth();
     
     // DSP methods.
-    float output (float phase) override;
+    float output() override;
     
 private:
-    float m_PulseWidth = 0.5f;
+    float pulseWidth = 0.5f;
 
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (PulseOscillator)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (SquareOscillator)
 };
 
 
@@ -115,7 +95,7 @@ public:
     TriangleOscillator();
     
     // DSP methods.
-    float output (float phase) override;
+    float output() override;
 
 private:
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (TriangleOscillator)
@@ -131,7 +111,7 @@ public:
     SawtoothOscillator();
     
     // DSP methods.
-    float output (float phase) override;
+    float output() override;
     
 private:
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (SawtoothOscillator)

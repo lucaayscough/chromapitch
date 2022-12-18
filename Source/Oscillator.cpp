@@ -8,116 +8,78 @@ Oscillator::Oscillator() {}
 
 Oscillator::~Oscillator() {}
 
+void Oscillator::setFrequency(float frequencyToUse)                 { frequency = frequencyToUse; }
+void Oscillator::setSampleRate(float sampleRateToUse)               { sampleRate = sampleRateToUse; }
+void Oscillator::setPhase(float phaseToUse)                         { phase = phaseToUse; }
+void Oscillator::setPhaseDelta(float phaseDeltaToUse)               { phaseDelta = phaseDeltaToUse; }
 
-//================================================//
-// Setter methods.
+float Oscillator::getFrequency()                                    { return frequency; }
+float Oscillator::getSampleRate()                                   { return sampleRate; }
+float Oscillator::getPhase()                                        { return phase; }
+float Oscillator::getPhaseDelta()                                   { return phaseDelta; }
 
-void Oscillator::setFrequency (float frequency)                     { m_Frequency = frequency; }
-void Oscillator::setSampleRate (float sampleRate)                   { m_SampleRate = sampleRate; }
-void Oscillator::setBlockSize (int blockSize)                       { m_BlockSize = blockSize; }
-void Oscillator::setPhase (float phase)                             { m_Phase = phase; }
-void Oscillator::setPhaseDelta (float phaseDelta)                   { m_PhaseDelta = phaseDelta; }
-
-
-//================================================//
-// Getter methods.
-
-float Oscillator::getFrequency()                                    { return m_Frequency; }
-float Oscillator::getSampleRate()                                   { return m_SampleRate; }
-int Oscillator::getBlockSize()                                      { return m_BlockSize; }
-float Oscillator::getPhase()                                        { return m_Phase; }
-float Oscillator::getPhaseDelta()                                   { return m_PhaseDelta; }
-juce::AudioBuffer<float>& Oscillator::getBlock()                    { return m_Buffer; }
-
-
-//================================================//
-// Phase methods.
-
-/**
-    Updates the phase of the oscillator's cycle by adding a phase delta value.
- */
 void Oscillator::updatePhase()
 {
-    m_Phase += m_PhaseDelta;
+    phase += phaseDelta;
     
-    if (m_Phase > 1.0f)
-        m_Phase -= 1.0f;
+    if(phase > 1.0f)
+        phase -= 1.0f;
 }
 
-/**
-    Updates the phase delta of the oscllator based on the current frequency
-    and sample rate.
- */
 void Oscillator::updatePhaseDelta()
 {
-    m_PhaseDelta = m_Frequency / m_SampleRate;
+    phaseDelta = frequency / sampleRate;
 }
 
-
-//================================================//
-// Init methods.
-
-/**
-    Prepares the oscillator for playback.
-    @param frequency Frequency to use.
-    @param sampleRate Sample rate to use.
-    @param blockSize Block size to use.
- */
-
-void Oscillator::prepareToPlay (float frequency, float sampleRate, int blockSize)
+void Oscillator::prepareToPlay(float sampleRateToUse)
 {
-    setFrequency (frequency);
-    setSampleRate (sampleRate);
-    setBlockSize (blockSize);
-    
-    m_Buffer.setSize(1, blockSize);
-    
-    updatePhaseDelta();
+    setSampleRate(sampleRateToUse);
 }
 
-
-//================================================//
-// DSP methods.
-
-/**
-    Virtual method that returns the phase to be outputted.
-    @param phase Phase to use.
- */
-
-float Oscillator::output (float phase)
+void Oscillator::prepareToPlay(float frequencyToUse, float sampleRateToUse)
 {
-    return phase;
+    setFrequency(frequencyToUse);
+    setSampleRate(sampleRateToUse);
 }
 
-/**
-    Processes a single sample, updates the phase of the oscillator and returns the sample.
- */
+float Oscillator::output()
+{
+    return getPhase();
+}
 
 float Oscillator::processSample()
 {
     updatePhaseDelta();
     
-    float sample = output (m_Phase);
+    float sample = output();
     updatePhase();
     
     return sample;
 }
 
-/**
-    Processes a block of samples and updates the phase of the oscillator.
- */
-
-void Oscillator::processBlock()
+void Oscillator::processBlock(juce::AudioBuffer<float>& buffer)
 {
     updatePhaseDelta();
     
-    m_Buffer.clear();
-    auto* bufferData = m_Buffer.getWritePointer (0);
+    const auto numChannels = buffer.getNumChannels();
+    const auto numSamples = buffer.getNumSamples();
+
+    float samples[numSamples];
     
-    for (int i = 0; i < m_BlockSize; i++)
+    for (int sample = 0; sample < numSamples; ++sample)
     {
-        bufferData[i] = output (m_Phase);
+        samples[sample] = output();
         updatePhase();
+    }
+    
+    for (int channel = 0; channel < numChannels; ++channel)
+    {
+        auto* bufferData = buffer.getWritePointer(channel);
+        
+        for (int sample = 0; sample < numSamples; ++sample)
+        {
+            bufferData[sample] = samples[sample];
+        }
     }
 }
 
@@ -127,14 +89,9 @@ void Oscillator::processBlock()
 
 SineOscillator::SineOscillator() {}
 
-/**
-    Outputs the sample value for the current phase based on sine wave algorithm.
-    @param phase Phase to use.
- */
-
-float SineOscillator::output (float phase)
+float SineOscillator::output()
 {
-    return std::sin(2.0f * phase * M_PI);
+    return std::sin(2.0f * getPhase() * M_PI);
 }
 
 
@@ -143,54 +100,21 @@ float SineOscillator::output (float phase)
 
 SquareOscillator::SquareOscillator() {}
 
-/**
-    Outputs the sample value for the current phase based on square wave algorithm.
-    @param phase Phase to use.
- */
+void SquareOscillator::setPulseWidth(float pulseWidthToUse)          { pulseWidth = pulseWidthToUse; }
 
-float SquareOscillator::output (float phase)
+float SquareOscillator::getPulseWidth()                              { return pulseWidth; }
+
+float SquareOscillator::output()
 {
-    if (phase < 0.5f)
+    if (getPhase() < pulseWidth)
+    {
         return 1.0f;
+    }
     
     else
+    {
         return -1.0f;
-}
-
-
-//================================================//
-// Pulse wave oscillator.
-
-PulseOscillator::PulseOscillator() {}
-
-
-//================================================//                
-// Setter methods.
-
-void PulseOscillator::setPulseWidth (float pulseWidth)              { m_PulseWidth = pulseWidth; }
-
-
-//================================================//
-// Getter methods.
-
-float PulseOscillator::getPulseWidth()                              { return m_PulseWidth; }
-
-
-//================================================//
-// DSP methods.
-
-/**
-    Outputs the sample value for the current phase based on pulse wave algorithm.
-    @param phase Phase to use.
- */
-
-float PulseOscillator::output (float phase)
-{
-    if (phase < m_PulseWidth)
-        return 1.0f;
-    
-    else
-        return -1.0f;
+    }
 }
 
 
@@ -199,19 +123,10 @@ float PulseOscillator::output (float phase)
 
 TriangleOscillator::TriangleOscillator() {}
 
-
-//================================================//
-// DSP methods.
-
-/**
-    Outputs the sample value for the current phase based on triangle wave algorithm.
-    @param phase Phase to use.
- */
-
-float TriangleOscillator::output (float phase)
+float TriangleOscillator::output()
 {
     // Algorithm used to compute triangle wave in range [-1,1] --> https://wikimedia.org/api/rest_v1/media/math/render/svg/bc9fd743afd5943b7f83248e59d55d97119257b9
-    return 2.0f * std::fabs(2.0f * (phase - std::floor(phase + 0.5f))) - 1.0f;
+    return 2.0f * std::fabs(2.0f * (getPhase() - std::floor(getPhase() + 0.5f))) - 1.0f;
 }
 
 
@@ -220,17 +135,8 @@ float TriangleOscillator::output (float phase)
 
 SawtoothOscillator::SawtoothOscillator() {}
 
-
-//================================================//
-// DSP methods.
-
-/**
-    Outputs the sample value for the current phase based on sawtooth wave algorithm.
-    @param phase Phase to use.
- */
-
-float SawtoothOscillator::output (float phase)
+float SawtoothOscillator::output()
 {
     // Algorithm used to compute sawtooth wave in range [-1,1] --> https://wikimedia.org/api/rest_v1/media/math/render/svg/0f07cb8c8f5850b17ad8c3415800046cd1f38967
-    return 2.0f * (phase - std::floor(0.5f + phase));
+    return 2.0f * (getPhase() - std::floor(0.5f + getPhase()));
 }

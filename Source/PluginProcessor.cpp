@@ -84,7 +84,7 @@ void ChromaPitchAudioProcessor::changeProgramName (int index, const juce::String
 //==============================================================================
 void ChromaPitchAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
-    oscillator.prepareToPlay(440, sampleRate, samplesPerBlock);
+    oscillator.prepareToPlay(440, sampleRate);
     zeroCrossing.prepareToPlay(sampleRate);
 }
 
@@ -121,19 +121,13 @@ void ChromaPitchAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, 
     juce::ScopedNoDenormals noDenormals;
     
     buffer.clear();
-    
-    auto numSamples = buffer.getNumSamples();
 
-    oscillator.processBlock();
-    auto block = oscillator.getBlock();
-    
-    buffer.addFrom(0, 0, block, 0, 0, numSamples);
-    buffer.addFrom(1, 0, block, 0, 0, numSamples);
+    oscillator.processBlock(buffer);
     
     zeroCrossing.getFrequency(buffer);
     
-    buffer.applyGain(0, 0, numSamples, 0);
-    buffer.applyGain(1, 0, numSamples, 0);
+    //buffer.applyGain(0, 0, numSamples, 0);
+    //buffer.applyGain(1, 0, numSamples, 0);
 }
 
 //==============================================================================
