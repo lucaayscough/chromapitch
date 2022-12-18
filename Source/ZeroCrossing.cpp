@@ -39,14 +39,23 @@ void ZeroCrossing::getFrequency(juce::AudioBuffer<float>& buffer)
             
             if (numCrossings == 2)
             {
-                double subSampleCrossing = std::sqrt(std::pow(std::abs(channelData[sample]) + std::abs(channelData[sample - 1]), 2) + 1);
+                // TODO:
+                // check this...
                 
-                window = window + subSampleCrossing - 1.0;
+                double subSampleCrossing = 0.0;
+                
+                if (channelData[sample] != 0)
+                {
+                    subSampleCrossing = -channelData[sample - 1] / (channelData[sample - 1] - channelData[sample]);
+                }
+                
+                window = window - subSampleCrossing;
                 frequency = sampleRate / window;
 
-                window = subSampleCrossing - 1;
+                window = subSampleCrossing;
                 numCrossings = 0;
                 
+                //DBG(subSampleCrossing);
                 DBG (frequency);
             }
         }

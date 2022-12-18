@@ -123,7 +123,7 @@ void ChromaPitchAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, 
     buffer.clear();
     
     auto numSamples = buffer.getNumSamples();
-    
+
     oscillator.processBlock();
     auto block = oscillator.getBlock();
     
@@ -131,6 +131,9 @@ void ChromaPitchAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, 
     buffer.addFrom(1, 0, block, 0, 0, numSamples);
     
     zeroCrossing.getFrequency(buffer);
+    
+    buffer.applyGain(0, 0, numSamples, 0);
+    buffer.applyGain(1, 0, numSamples, 0);
 }
 
 //==============================================================================
@@ -145,18 +148,9 @@ juce::AudioProcessorEditor* ChromaPitchAudioProcessor::createEditor()
 }
 
 //==============================================================================
-void ChromaPitchAudioProcessor::getStateInformation (juce::MemoryBlock& destData)
-{
-    // You should use this method to store your parameters in the memory block.
-    // You could do that either as raw data, or use the XML or ValueTree classes
-    // as intermediaries to make it easy to save and load complex data.
-}
+void ChromaPitchAudioProcessor::getStateInformation (juce::MemoryBlock& destData) {}
 
-void ChromaPitchAudioProcessor::setStateInformation (const void* data, int sizeInBytes)
-{
-    // You should use this method to restore your parameters from this memory block,
-    // whose contents will have been created by the getStateInformation() call.
-}
+void ChromaPitchAudioProcessor::setStateInformation (const void* data, int sizeInBytes) {}
 
 //==============================================================================
 // This creates new instances of the plugin..
