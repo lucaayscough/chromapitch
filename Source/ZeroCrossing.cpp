@@ -12,6 +12,9 @@ void ZeroCrossing::prepareToPlay(double sampleRateToUse)
 
 void ZeroCrossing::getFrequency(juce::AudioBuffer<float>& buffer)
 {
+    // TODO:
+    // Make this stereo.
+    
     //auto numChannels = buffer.getNumChannels();
     auto numSamples = buffer.getNumSamples();
     
@@ -19,45 +22,51 @@ void ZeroCrossing::getFrequency(juce::AudioBuffer<float>& buffer)
     for (int channel = 0; channel < 1; ++channel)
     {
         auto* channelData = buffer.getWritePointer (channel);
-        double frequency = 0;
+        double frequency = 0.0;
         
         for (int sample = 0; sample < numSamples; ++sample)
         {
-            ++window;
+            currentSample = channelData[sample];
             
-            if (channelData[sample] >= 0 && sign == false)
+            if (currentSample >= 0.0 && sign == false)
             {
                 ++numCrossings;
                 sign = true;
             }
             
-            else if (channelData[sample] < 0 && sign == true)
+            else if (currentSample <= 0.0 && sign == true)
             {
                 ++numCrossings;
                 sign = false;
             }
             
-            if (numCrossings == 2)
+            if (numCrossings == 3)
             {
-                // TODO:
-                // check this...
-                
                 double subSampleCrossing = 0.0;
                 
-                if (channelData[sample] != 0)
+                if (currentSample != 0.0)
                 {
-                    subSampleCrossing = -channelData[sample - 1] / (channelData[sample - 1] - channelData[sample]);
+                    subSampleCrossing = - (previousSample / (currentSample - previousSample));
                 }
                 
-                window = window - subSampleCrossing;
+                window = window - 1.0 + subSampleCrossing;
                 frequency = sampleRate / window;
-
-                window = subSampleCrossing;
-                numCrossings = 0;
                 
-                //DBG(subSampleCrossing);
                 DBG (frequency);
+
+                // Prepare for next round.
+                window = 1.0 - subSampleCrossing;
+                numCrossings = 0;
+                sign = false;
+                sample -= 1;
             }
+            
+            else
+            {
+                ++window;
+            }
+            
+            previousSample = currentSample;
         }
     }
 
