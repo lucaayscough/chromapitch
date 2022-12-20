@@ -7,8 +7,9 @@ public:
     ZeroCrossing();
     ~ZeroCrossing();
     
+    double getFrequency();
     void prepareToPlay(double sampleRate);
-    void getFrequency(juce::AudioBuffer<float>& buffer);
+    void computeFrequency(juce::AudioBuffer<float>& buffer);
     
 private:
     int numCrossings = 0;
@@ -18,6 +19,8 @@ private:
     
     double currentSample = 0.0;
     double previousSample = 0.0;
+    
+    double frequency = 0.0;
     
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ZeroCrossing)
 };

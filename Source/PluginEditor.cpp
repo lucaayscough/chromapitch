@@ -1,31 +1,61 @@
 #include "Headers.h"
 
-//==============================================================================
+
 ChromaPitchAudioProcessorEditor::ChromaPitchAudioProcessorEditor (ChromaPitchAudioProcessor& p)
     : AudioProcessorEditor (&p), audioProcessor (p)
 {
-    // Make sure that before the constructor has finished, you've set the
-    // editor's size to whatever you need it to be.
-    setSize (400, 300);
+    setSize(Variables::windowWidth, Variables::windowHeight);
+    
+    line.add(new Line);
+    line.add(new Line);
+
+    line[1]->colour = juce::Colours::red;
+    
+    addAndMakeVisible(line[0]);
+    addAndMakeVisible(line[1]);
+    
+    startTimerHz(60);
 }
 
-ChromaPitchAudioProcessorEditor::~ChromaPitchAudioProcessorEditor()
-{
-}
+ChromaPitchAudioProcessorEditor::~ChromaPitchAudioProcessorEditor() {}
 
-//==============================================================================
-void ChromaPitchAudioProcessorEditor::paint (juce::Graphics& g)
-{
-    // (Our component is opaque, so we must completely fill the background with a solid colour)
-    g.fillAll (getLookAndFeel().findColour (juce::ResizableWindow::backgroundColourId));
+void ChromaPitchAudioProcessorEditor::paint(juce::Graphics& g) {}
 
-    g.setColour (juce::Colours::white);
-    g.setFont (15.0f);
-    g.drawFittedText ("Hello World!", getLocalBounds(), juce::Justification::centred, 1);
-}
+void ChromaPitchAudioProcessorEditor::resized() {}
 
-void ChromaPitchAudioProcessorEditor::resized()
+void ChromaPitchAudioProcessorEditor::timerCallback()
 {
-    // This is generally where you'll want to lay out the positions of any
-    // subcomponents in your editor..
+    if (iter == 0) {
+        line[0]->unfreeze();
+    }
+    
+    else if (iter == getWidth())
+    {
+        line[1]->unfreeze();
+    }
+    
+    if (posX0 < -getWidth())
+    {
+        posX0 = 800.f;
+    }
+    
+    if (posX1 < -getWidth())
+    {
+        posX1 = 800.f;
+    }
+    
+    line[0]->setBounds(posX0, 0, getWidth(), getHeight());
+    line[1]->setBounds(posX1, 0, getWidth(), getHeight());
+    
+    posX0 -= Variables::incrementFactor;
+    posX1 -= Variables::incrementFactor;
+    
+    iter += Variables::incrementFactor;
+    
+    if (iter > getWidth() * 2)
+    {
+        iter = 0;
+    }
+    
+    repaint();
 }

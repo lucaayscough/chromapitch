@@ -5,12 +5,17 @@ ZeroCrossing::ZeroCrossing() {}
 
 ZeroCrossing::~ZeroCrossing() {}
 
+double ZeroCrossing::getFrequency()
+{
+    return frequency;
+}
+
 void ZeroCrossing::prepareToPlay(double sampleRateToUse)
 {
     sampleRate = sampleRateToUse;
 }
 
-void ZeroCrossing::getFrequency(juce::AudioBuffer<float>& buffer)
+void ZeroCrossing::computeFrequency(juce::AudioBuffer<float>& buffer)
 {
     // TODO:
     // Make this stereo.
@@ -22,7 +27,6 @@ void ZeroCrossing::getFrequency(juce::AudioBuffer<float>& buffer)
     for (int channel = 0; channel < 1; ++channel)
     {
         auto* channelData = buffer.getWritePointer (channel);
-        double frequency = 0.0;
         
         for (int sample = 0; sample < numSamples; ++sample)
         {
@@ -51,8 +55,6 @@ void ZeroCrossing::getFrequency(juce::AudioBuffer<float>& buffer)
                 
                 window = window - 1.0 + subSampleCrossing;
                 frequency = sampleRate / window;
-                
-                DBG (frequency);
 
                 // Prepare for next round.
                 window = 1.0 - subSampleCrossing;

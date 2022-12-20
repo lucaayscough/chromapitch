@@ -1,3 +1,1 @@
-Zero-crossing
-
-The most obvious way to do zero crossing is to add 1 to a counter every time the sign flips from + to -.
+To increase accuracy in future derive subSampleValue from more past values.

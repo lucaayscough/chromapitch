@@ -12,14 +12,10 @@ ChromaPitchAudioProcessor::ChromaPitchAudioProcessor()
                      #endif
                        )
 #endif
-{
-}
+{}
 
-ChromaPitchAudioProcessor::~ChromaPitchAudioProcessor()
-{
-}
+ChromaPitchAudioProcessor::~ChromaPitchAudioProcessor() {}
 
-//==============================================================================
 const juce::String ChromaPitchAudioProcessor::getName() const
 {
     return JucePlugin_Name;
@@ -77,9 +73,7 @@ const juce::String ChromaPitchAudioProcessor::getProgramName (int index)
     return {};
 }
 
-void ChromaPitchAudioProcessor::changeProgramName (int index, const juce::String& newName)
-{
-}
+void ChromaPitchAudioProcessor::changeProgramName (int index, const juce::String& newName) {}
 
 //==============================================================================
 void ChromaPitchAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
@@ -122,9 +116,11 @@ void ChromaPitchAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, 
     
     buffer.clear();
 
+    oscillator.setFrequency(oscillator.getFrequency() + 0.01);
     oscillator.processBlock(buffer);
     
-    zeroCrossing.getFrequency(buffer);
+    
+    zeroCrossing.computeFrequency(buffer);
     
     buffer.applyGain(0, 0, buffer.getNumSamples(), 0);
     buffer.applyGain(1, 0, buffer.getNumSamples(), 0);
@@ -133,7 +129,7 @@ void ChromaPitchAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, 
 //==============================================================================
 bool ChromaPitchAudioProcessor::hasEditor() const
 {
-    return true; // (change this to false if you choose to not supply an editor)
+    return true;
 }
 
 juce::AudioProcessorEditor* ChromaPitchAudioProcessor::createEditor()
