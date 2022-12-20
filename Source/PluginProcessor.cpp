@@ -116,7 +116,7 @@ void ChromaPitchAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, 
     
     buffer.clear();
 
-    oscillator.setFrequency(oscillator.getFrequency() + 0.01);
+    oscillator.setFrequency(oscillator.getFrequency() + 0.1);
     oscillator.processBlock(buffer);
     
     

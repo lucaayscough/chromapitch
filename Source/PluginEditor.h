@@ -14,7 +14,9 @@ public:
 
 private:
     ChromaPitchAudioProcessor& audioProcessor;
-    juce::OwnedArray<Line> line;
+    juce::Path path;
+    juce::OwnedArray<juce::Line<float>> lines;
+    juce::Array<float> frequencies;
 
     float posX0 = 800.f;
     float posX1 = 1600.f;
