@@ -8,6 +8,7 @@ public:
     ~ZeroCrossing();
     
     double getFrequency();
+    bool isReadingValid();
     void prepareToPlay(double sampleRate);
     void computeFrequency(juce::AudioBuffer<float>& buffer);
     
@@ -21,6 +22,7 @@ private:
     double previousSample = 0.0;
     
     double frequency = 0.0;
+    bool validReading = false;
     
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ZeroCrossing)
 };

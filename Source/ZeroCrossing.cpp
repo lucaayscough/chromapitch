@@ -10,6 +10,11 @@ double ZeroCrossing::getFrequency()
     return frequency;
 }
 
+bool ZeroCrossing::isReadingValid()
+{
+    return validReading;
+}
+
 void ZeroCrossing::prepareToPlay(double sampleRateToUse)
 {
     sampleRate = sampleRateToUse;
@@ -17,11 +22,23 @@ void ZeroCrossing::prepareToPlay(double sampleRateToUse)
 
 void ZeroCrossing::computeFrequency(juce::AudioBuffer<float>& buffer)
 {
+    
+    
     // TODO:
     // Make this stereo.
     
     //auto numChannels = buffer.getNumChannels();
     auto numSamples = buffer.getNumSamples();
+    
+    auto rms = buffer.getRMSLevel(0, 0, numSamples);
+    auto db = juce::Decibels::gainToDecibels(rms);
+    
+    validReading = db > Variables::dbThreshold;
+    
+    if (!validReading)
+    {
+        return;
+    }
     
     // Detect pitch.
     for (int channel = 0; channel < 1; ++channel)
@@ -55,6 +72,7 @@ void ZeroCrossing::computeFrequency(juce::AudioBuffer<float>& buffer)
                 
                 window = window - 1.0 + subSampleCrossing;
                 frequency = sampleRate / window;
+                DBG (frequency);
 
                 // Prepare for next round.
                 window = 1.0 - subSampleCrossing;
