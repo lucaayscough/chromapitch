@@ -52,6 +52,7 @@ private:
 
 public:
     ZeroCrossing zeroCrossing;
+    YIN yin;
     
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ChromaPitchAudioProcessor)
 };

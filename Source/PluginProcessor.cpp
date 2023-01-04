@@ -80,6 +80,15 @@ void ChromaPitchAudioProcessor::prepareToPlay (double sampleRate, int samplesPer
 {
     oscillator.prepareToPlay(440, sampleRate);
     zeroCrossing.prepareToPlay(sampleRate);
+    
+    int windowSize = std::ceil(sampleRate / (double)Variables::minimumFrequency);
+    
+    if (windowSize < samplesPerBlock)
+    {
+        windowSize = samplesPerBlock;
+    }
+    
+    yin.prapareToPlay(sampleRate, windowSize);
 }
 
 void ChromaPitchAudioProcessor::releaseResources() {}
@@ -119,6 +128,7 @@ void ChromaPitchAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, 
     oscillator.processBlock(buffer);
 
     //zeroCrossing.computeFrequency(buffer);
+    yin.detectFrequency(buffer);
     
     buffer.applyGain(0, 0, buffer.getNumSamples(), 0);
     buffer.applyGain(1, 0, buffer.getNumSamples(), 0);

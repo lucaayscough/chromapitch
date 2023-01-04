@@ -7,4 +7,5 @@ struct Variables
     static const int windowWidth = 800;
     static const int windowHeight = 600;
     static const int dbThreshold = -48;
+    static const int minimumFrequency = 50;
 };
