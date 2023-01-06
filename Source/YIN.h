@@ -24,9 +24,10 @@ private:
     int m_windowSize = 512;
     float m_threshold = 0.1;
     float m_probablity = 0;
+    float m_sampleRate = 48000;
+
     juce::Array<float> m_buffer;
     juce::Array<float> m_yinBuffer;
-    float m_sampleRate = 48000;
      
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(YIN)
 };
