@@ -7,20 +7,26 @@ public:
     YIN();
     ~YIN();
     
-    void setSampleRate(double sampleRate);
-    void setWindowSize(double windowSize);
+    void setSampleRate(float sampleRate);
+    void setWindowSize(float windowSize);
     
-    void prapareToPlay(double sampleRate, double windowSize);
+    void prapareToPlay(float sampleRate, float windowSize);
     
-    double autoCorrelate(int step, int lag);
-    double difference(int step, int lag);
-    void detectFrequency(juce::AudioBuffer<float>& buffer);
+    void difference();
+    void cumulativeMeanNormalizedDifference();
+    int absoluteThreshold();
+    float detectFrequency();
+    void processBlock(juce::AudioBuffer<float>& buffer);
     
+
 private:
-    juce::Array<float> m_buffer;
-    double m_sampleRate = 48000;
-    double m_frequency = 0;
+    int m_bufferSize = 512;
     int m_windowSize = 512;
-    
+    float m_threshold = 0.1;
+    float m_probablity = 0;
+    juce::Array<float> m_buffer;
+    juce::Array<float> m_yinBuffer;
+    float m_sampleRate = 48000;
+     
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(YIN)
 };
