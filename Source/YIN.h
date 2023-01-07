@@ -10,21 +10,24 @@ public:
     void setSampleRate(float sampleRate);
     void setWindowSize(float windowSize);
     
+    float getNextFrequency();
+
     void prapareToPlay(float sampleRate, float windowSize);
-    
+    void processBlock(juce::AudioBuffer<float>& buffer);
+
+private:
     void difference();
     void cumulativeMeanNormalizedDifference();
     int absoluteThreshold();
-    float detectFrequency();
-    void processBlock(juce::AudioBuffer<float>& buffer);
-    
+    float parabolicInterpolation(int tauEstimate);
+    void detectFrequency();
 
 private:
     int m_bufferSize = 512;
     int m_windowSize = 512;
     float m_threshold = 0.1;
-    float m_probablity = 0;
     float m_sampleRate = 48000;
+    float m_frequency = -1;
 
     juce::Array<float> m_buffer;
     juce::Array<float> m_yinBuffer;

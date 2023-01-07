@@ -132,7 +132,7 @@ void ChromaPitchAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, 
 //==============================================================================
 bool ChromaPitchAudioProcessor::hasEditor() const
 {
-    return false;
+    return true;
 }
 
 juce::AudioProcessorEditor* ChromaPitchAudioProcessor::createEditor()

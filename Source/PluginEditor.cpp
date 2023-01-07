@@ -22,10 +22,12 @@ void ChromaPitchAudioProcessorEditor::paint(juce::Graphics& g)
 
     g.setColour (juce::Colours::white);
     g.setFont (15.0f);
+   
+    auto frequency = audioProcessor.yin.getNextFrequency();
     
-    if (audioProcessor.zeroCrossing.isReadingValid())
+    if (frequency != -1)
     {
-        juce::String string = juce::String((int)audioProcessor.zeroCrossing.getFrequency());
+        juce::String string = juce::String(frequency);
         g.drawFittedText (string, getLocalBounds(), juce::Justification::centred, 1);
     }
     
@@ -45,6 +47,7 @@ void ChromaPitchAudioProcessorEditor::resized() {}
 
 void ChromaPitchAudioProcessorEditor::timerCallback()
 {
+    /*
     frequencies.insert(0, audioProcessor.zeroCrossing.getFrequency());
     
     if (frequencies.size() > getWidth() / Variables::incrementFactor)
@@ -62,5 +65,7 @@ void ChromaPitchAudioProcessorEditor::timerCallback()
         path.addLineSegment(*lines[i], 5);
     }
     
+    */
     repaint();
+
 }

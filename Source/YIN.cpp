@@ -19,6 +19,14 @@ void YIN::setWindowSize(float windowSize)
     m_buffer.ensureStorageAllocated(m_bufferSize);
 }
 
+float YIN::getNextFrequency()
+{
+    auto frequency = m_frequency;
+    m_frequency = -1;
+
+    return frequency;
+}
+
 void YIN::prapareToPlay(float sampleRate, float windowSize)
 {
     setSampleRate(sampleRate);
@@ -83,18 +91,87 @@ int YIN::absoluteThreshold()
    return tau;
 }
 
-float YIN::detectFrequency()
+float YIN::parabolicInterpolation(int tauEstimate)
+{
+    float betterTau;
+
+    int x0;
+    int x2;
+
+    if (tauEstimate < 1)
+    {
+        x0 = tauEstimate;
+    }
+    
+    else
+    {
+        x0 = tauEstimate - 1;
+    }
+    
+    if (tauEstimate + 1 < m_windowSize)
+    {
+        x2 = tauEstimate + 1;
+    }
+
+    else
+    {
+        x2 = tauEstimate;
+    }
+    
+    if (x0 == tauEstimate)
+    {
+        if (m_yinBuffer[tauEstimate] <= m_yinBuffer[x2])
+        {
+            betterTau = tauEstimate; 
+        }
+
+        else
+        {
+            betterTau = x2;
+        }
+    }
+
+    else if (x2 == tauEstimate)
+    {
+        if (m_yinBuffer[tauEstimate] <= m_yinBuffer[x0])
+        {
+            betterTau = tauEstimate;
+        }
+
+        else
+        {
+            betterTau = x0;
+        }
+    }
+
+    else 
+    {
+        float s0, s1, s2;
+        s0 = m_yinBuffer[x0];
+        s1 = m_yinBuffer[tauEstimate];
+        s2 = m_yinBuffer[x2];
+        betterTau = tauEstimate + (s2 - s0) / (2 * (2 * s1 - s2 - s0));
+    }
+
+    return betterTau;
+}
+
+void YIN::detectFrequency()
 {
     difference();
     cumulativeMeanNormalizedDifference();
     auto tau = absoluteThreshold(); 
-    
+
     if (tau == -1)
     {
-        return -1;
+        m_frequency = -1;
     }
-
-    return m_sampleRate / tau; 
+    
+    else
+    {
+        tau = parabolicInterpolation(tau);
+        m_frequency =  m_sampleRate / tau; 
+    }
 }
 
 void YIN::processBlock(juce::AudioBuffer<float>& signal)
@@ -114,8 +191,7 @@ void YIN::processBlock(juce::AudioBuffer<float>& signal)
         
         for (int i = 0; i < numRuns; ++i)
         {
-            auto frequency = detectFrequency();
-            DBG(frequency);
+            detectFrequency();
             
             // Prepare for next run.
             m_yinBuffer.clearQuick(); 
@@ -123,4 +199,3 @@ void YIN::processBlock(juce::AudioBuffer<float>& signal)
         }
     }
 }
-
