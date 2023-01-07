@@ -78,8 +78,7 @@ void ChromaPitchAudioProcessor::changeProgramName (int index, const juce::String
 //==============================================================================
 void ChromaPitchAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
-    oscillator.prepareToPlay(440, sampleRate);
-    zeroCrossing.prepareToPlay(sampleRate);
+    oscillator.prepareToPlay(4186, sampleRate);
     
     int windowSize = std::ceil(sampleRate / (double)Variables::minimumFrequency);
     
@@ -119,10 +118,8 @@ void ChromaPitchAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, 
     juce::ScopedNoDenormals noDenormals;
     
     //buffer.clear();
-
     //oscillator.processBlock(buffer);
 
-    //zeroCrossing.computeFrequency(buffer);
     yin.processBlock(buffer);
     
     buffer.applyGain(0, 0, buffer.getNumSamples(), 0);

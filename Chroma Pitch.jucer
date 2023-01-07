@@ -6,9 +6,8 @@
               pluginManufacturer="Chroma">
   <MAINGROUP id="C8k5RR" name="Chroma Pitch">
     <GROUP id="{A2A1EDFB-4B96-DCC5-B971-F8C78EF2394D}" name="Source">
-      <FILE id="ntJ3i0" name="ZeroCrossing.cpp" compile="1" resource="0"
-            file="Source/ZeroCrossing.cpp"/>
-      <FILE id="E2lHt3" name="ZeroCrossing.h" compile="0" resource="0" file="Source/ZeroCrossing.h"/>
+      <FILE id="EdBwOV" name="PitchLine.cpp" compile="1" resource="0" file="Source/PitchLine.cpp"/>
+      <FILE id="EaXMEO" name="PitchLine.h" compile="0" resource="0" file="Source/PitchLine.h"/>
       <FILE id="UTFAPe" name="YIN.cpp" compile="1" resource="0" file="Source/YIN.cpp"/>
       <FILE id="s5vCD7" name="YIN.h" compile="0" resource="0" file="Source/YIN.h"/>
       <FILE id="iZ0LAp" name="PluginProcessor.cpp" compile="1" resource="0"
@@ -22,6 +21,10 @@
       <FILE id="skAzFO" name="PluginEditor.h" compile="0" resource="0" file="Source/PluginEditor.h"/>
       <FILE id="nV2vFW" name="Headers.h" compile="0" resource="0" file="Source/Headers.h"/>
       <FILE id="lVyjOB" name="Variables.h" compile="0" resource="0" file="Source/Variables.h"/>
+      <FILE id="ulsSZ4" name="NoteBox.cpp" compile="1" resource="0" file="Source/NoteBox.cpp"/>
+      <FILE id="PNJVtK" name="NoteBox.h" compile="0" resource="0" file="Source/NoteBox.h"/>
+      <FILE id="gJXXtp" name="View.cpp" compile="1" resource="0" file="Source/View.cpp"/>
+      <FILE id="GUBS39" name="View.h" compile="0" resource="0" file="Source/View.h"/>
     </GROUP>
   </MAINGROUP>
   <JUCEOPTIONS JUCE_STRICT_REFCOUNTEDPOINTER="1" JUCE_VST3_CAN_REPLACE_VST2="0"/>

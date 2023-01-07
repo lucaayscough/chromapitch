@@ -14,16 +14,9 @@ public:
 
 private:
     ChromaPitchAudioProcessor& audioProcessor;
-    juce::Path path;
-    juce::OwnedArray<juce::Line<float>> lines;
-    juce::Array<float> frequencies;
 
-    float posX0 = 800.f;
-    float posX1 = 1600.f;
-    
-    bool update = true;
-    
-    int iter = 0;
+    View m_view;
+    PitchLine m_pitchLine;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ChromaPitchAudioProcessorEditor)
 };
