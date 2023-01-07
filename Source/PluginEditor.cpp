@@ -23,32 +23,17 @@ void ChromaPitchAudioProcessorEditor::paint(juce::Graphics& g)
     g.setColour (juce::Colours::white);
     g.setFont (15.0f);
    
-    auto frequency = audioProcessor.yin.getNextFrequency();
-    
-    if (frequency != -1)
-    {
-        juce::String string = juce::String(frequency);
-        g.drawFittedText (string, getLocalBounds(), juce::Justification::centred, 1);
-    }
-    
-    else
-    {
-        g.drawFittedText ("No reading", getLocalBounds(), juce::Justification::centred, 1);
-    }
-    
-    
-    
-    
-    //g.setColour(juce::Colours::orange);
-    //g.fillPath(path);
+    g.setColour(juce::Colours::orange);
+    g.fillPath(path);
 }
 
 void ChromaPitchAudioProcessorEditor::resized() {}
 
 void ChromaPitchAudioProcessorEditor::timerCallback()
 {
-    /*
-    frequencies.insert(0, audioProcessor.zeroCrossing.getFrequency());
+    auto frequency = audioProcessor.yin.getNextFrequency();
+    
+    frequencies.insert(0, frequency);
     
     if (frequencies.size() > getWidth() / Variables::incrementFactor)
     {
@@ -59,13 +44,14 @@ void ChromaPitchAudioProcessorEditor::timerCallback()
     
     for (int i = 0; i < frequencies.size(); ++i)
     {
-        lines[i]->setStart(getWidth() - ((i + 1) * Variables::incrementFactor), getHeight() / 2 - frequencies[i]);
-        lines[i]->setEnd(getWidth() - ((i + 1) * Variables::incrementFactor) + Variables::incrementFactor, getHeight() / 2 - frequencies[i]);
-        
-        path.addLineSegment(*lines[i], 5);
-    }
-    
-    */
-    repaint();
+        if (frequencies[i] != -1)
+        {
+            lines[i]->setStart(getWidth() - ((i + 1) * Variables::incrementFactor), getHeight() / 2 - frequencies[i]);
+            lines[i]->setEnd(getWidth() - ((i + 1) * Variables::incrementFactor) + Variables::incrementFactor, getHeight() / 2 - frequencies[i]);
+            
+            path.addLineSegment(*lines[i], 5);
+        }
+    } 
 
+    repaint();
 }
