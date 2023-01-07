@@ -12,11 +12,15 @@ public:
     
     void timerCallback() override;
 
+    void mouseWheelMove(const juce::MouseEvent& event, const juce::MouseWheelDetails& wheel) override; 
+    
 private:
     ChromaPitchAudioProcessor& audioProcessor;
 
     View m_view;
     PitchLine m_pitchLine;
+
+    float m_scrollPosY = 0;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ChromaPitchAudioProcessorEditor)
 };

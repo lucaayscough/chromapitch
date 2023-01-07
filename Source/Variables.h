@@ -9,5 +9,6 @@ struct Variables
     static const int dbThreshold = -48;
     static const int minimumFrequency = 50;
     
+    static const int numBoxes = 108 - 21; 
     static const int noteBoxHeight = 40;
 };
