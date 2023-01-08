@@ -7,7 +7,7 @@ View::View()
     {
         m_noteBoxes.add(new NoteBox);
         addAndMakeVisible(m_noteBoxes[i]);
-        m_noteBoxes[i]->setComponentID(juce::String(i));
+        m_noteBoxes[i]->setComponentID(juce::MidiMessage::getMidiNoteName(Variables::higherKeyBound - i - 1, true, true, 4));
     }
 }
 
