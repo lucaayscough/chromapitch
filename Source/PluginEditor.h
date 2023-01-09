@@ -20,7 +20,7 @@ private:
     View m_view;
     PitchLine m_pitchLine;
 
-    float m_scrollPosY = 0;
+    float m_scrollPosY = -(Variables::numBoxes * Variables::noteBoxHeight / 2);
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ChromaPitchAudioProcessorEditor)
 };

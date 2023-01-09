@@ -26,8 +26,33 @@ void PitchLine::update(float frequency)
     {
         if (frequencies[i] != -1)
         {
-            lines[i]->setStart(getWidth() - ((i + 1) * Variables::incrementFactor), getHeight() / 2 - frequencies[i]);
-            lines[i]->setEnd(getWidth() - ((i + 1) * Variables::incrementFactor) + Variables::incrementFactor, getHeight() / 2 - frequencies[i]);
+
+            int note = (12 * log(frequencies[i] / 220.0) / log(2.0)) + 57;
+
+            int posStartX = getWidth() - ((i + 1) * Variables::incrementFactor);
+            int posStartY = (Variables::higherKeyBound - note - 1) * Variables::noteBoxHeight;
+            
+            int posEndX = posStartX + Variables::incrementFactor;
+            int posEndY = posStartY;
+
+            if (i > 0) 
+            {
+                for (int validFreq = 1; validFreq < 21; ++validFreq)
+                {
+                    if (frequencies[i - validFreq] != -1)        
+                    {
+                        
+                        note = (12 * log(frequencies[i - validFreq] / 220.0) / log(2.0)) + 57;
+
+                        posStartX = getWidth() - ((i + 1 - validFreq) * Variables::incrementFactor);
+                        posStartY = (Variables::higherKeyBound - note - 1) * Variables::noteBoxHeight;
+                    } 
+                }
+            }
+
+            lines[i]->setStart(posStartX, posStartY);
+            lines[i]->setEnd(posEndX, posEndY);
+            
             
             path.addLineSegment(*lines[i], 5);
         }
