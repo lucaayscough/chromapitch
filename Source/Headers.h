@@ -2,6 +2,7 @@
 
 #include <JuceHeader.h>
 
+#include "Midi.h"
 #include "Variables.h"
 
 #include "Oscillator.h"

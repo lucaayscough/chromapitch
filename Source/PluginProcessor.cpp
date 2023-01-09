@@ -81,7 +81,6 @@ void ChromaPitchAudioProcessor::prepareToPlay (double sampleRate, int samplesPer
     oscillator.prepareToPlay(4186, sampleRate);
     
     int windowSize = std::ceil(sampleRate / (double)Variables::minimumFrequency);
-    
     yin.prapareToPlay(sampleRate, windowSize);
 }
 
