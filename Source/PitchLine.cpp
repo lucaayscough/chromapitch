@@ -41,7 +41,7 @@ void PitchLine::update(float frequency)
             // Search for next viable Y.
             nextPosY = m_posY[i]; 
 
-            for (int y = 1; y < m_posY.size() && y < 50; ++y)
+            for (int y = 1; y + i < m_posY.size() && y < 50; ++y)
             {
                 if (m_posY[i + y] != -1)
                 {
