@@ -5,7 +5,8 @@ ChromaPitchAudioProcessorEditor::ChromaPitchAudioProcessorEditor (ChromaPitchAud
     : AudioProcessorEditor (&p), audioProcessor (p)
 {
     setSize(Variables::windowWidth, Variables::windowHeight);
-    
+    setResizable(true, true);
+
     startTimerHz(60);
 
     addAndMakeVisible(m_view);
