@@ -61,7 +61,7 @@ void PitchLine::update(float frequency)
 
 void PitchLine::paint(juce::Graphics& g)
 {
-    g.setColour(juce::Colours::orange);
+    g.setColour(Variables::pitchLineColour);
     g.fillPath(m_path);
 }
 

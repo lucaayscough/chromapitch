@@ -26,7 +26,6 @@ void ChromaPitchAudioProcessorEditor::timerCallback()
 {
     auto frequency = audioProcessor.yin.getNextFrequency();
     m_pitchLine.update(frequency);
-    //DBG(frequency);
 
     repaint();
 }
