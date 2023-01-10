@@ -36,6 +36,7 @@ void PitchLine::update(float frequency)
             int posEndX = posStartX + Variables::incrementFactor;
             int posEndY = posStartY;
             
+            /*
             if (i > 0) 
             {
                 for (int validFreq = 1; validFreq < 100; ++validFreq)
@@ -53,6 +54,7 @@ void PitchLine::update(float frequency)
                     } 
                 }
             }
+            */
 
             lines[i]->setStart(posStartX, posStartY);
             lines[i]->setEnd(posEndX, posEndY);

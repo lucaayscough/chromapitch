@@ -6,6 +6,8 @@ http://audition.ens.fr/adc/pdf/2002_JASA_YIN.pdf
 C implmentation:
 https://github.com/ashokfernandez/Yin-Pitch-Tracking
 
+Frequency to midi conversion: 
+https://newt.phys.unsw.edu.au/jw/notes.html
 
 TODO:
 
@@ -15,3 +17,5 @@ Connect to GUI;
 Current GUI is very inefficent;
 Implement circular buffers to increase efficency;
 Pre-compute lookup tables for frequency conversions;
+Fix issue where agorithm doesn't work at low buffer sizes;
+
