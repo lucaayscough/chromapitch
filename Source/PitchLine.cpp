@@ -1,65 +1,60 @@
 #include "Headers.h"
 
 
-PitchLine::PitchLine()
-{
-    for (int i = 0; i < Variables::windowWidth / Variables::incrementFactor; ++i)
-    {
-        lines.add(new juce::Line<float>);
-    }
-}
+PitchLine::PitchLine() {}
 
 PitchLine::~PitchLine() {}
 
 void PitchLine::update(float frequency)
 {
-    frequencies.insert(0, frequency);
-    
-    if (frequencies.size() > getWidth() / Variables::incrementFactor)
+    if (frequency == -1)
     {
-        frequencies.remove(frequencies.size() - 1);
+        m_posY.insert(0, -1);
+    }
+
+    else
+    {
+        int note = Chroma::Midi::frequencyToMidi(frequency);
+        int cents = Chroma::Midi::centsFromNearestNote(frequency);
+        
+        int posY = (Variables::higherKeyBound - note) * Variables::noteBoxHeight - Variables::noteBoxHeight / 2 - ((cents / 50.0) * (Variables::noteBoxHeight / 2.0));
+
+        m_posY.insert(0, posY);
     }
     
-    path.clear();
-    
-    for (int i = 0; i < frequencies.size(); ++i)
+    if (m_posY.size() > getWidth() / Variables::incrementFactor)
     {
-        if (frequencies[i] != -1)
+        m_posY.remove(m_posY.size() - 1);
+    }
+    
+    m_path.clear();
+    
+    int posX, nextPosY;
+    juce::Line<float> line;
+
+    for (int i = 0; i < m_posY.size(); ++i)
+    {
+        if (m_posY[i] != -1)
         {
+            posX = getWidth() - (i * Variables::incrementFactor);
 
-            int note = Chroma::Midi::frequencyToMidi(frequencies[i]);
-            int cents = Chroma::Midi::centsFromNearestNote(frequencies[i]);
+            // Search for next viable Y.
+            nextPosY = m_posY[i]; 
 
-            int posStartX = getWidth() - ((i + 1) * Variables::incrementFactor);
-            int posStartY = (Variables::higherKeyBound - note) * Variables::noteBoxHeight - Variables::noteBoxHeight / 2 - ((cents / 50.0) * (Variables::noteBoxHeight / 2.0));
-
-            int posEndX = posStartX + Variables::incrementFactor;
-            int posEndY = posStartY;
-            
-            /*
-            if (i > 0) 
+            for (int y = 1; y < m_posY.size() && y < 50; ++y)
             {
-                for (int validFreq = 1; validFreq < 100; ++validFreq)
+                if (m_posY[i + y] != -1)
                 {
-                    if (i - validFreq < 0)
-                        break;
-
-                    else if (frequencies[i - validFreq] != -1)        
-                    {
-                        note = Chroma::Midi::frequencyToMidi(frequencies[i - validFreq]);
-                        
-                        posStartX = getWidth() - ((i + 1 - validFreq) * Variables::incrementFactor);
-                        posStartY = (Variables::higherKeyBound - note) * Variables::noteBoxHeight - Variables::noteBoxHeight / 2 - ((cents / 50.0) * (Variables::noteBoxHeight / 2.0));
-                        break;
-                    } 
+                    nextPosY = m_posY[i + y];
+                    break;
                 }
-            }
-            */
+            } 
 
-            lines[i]->setStart(posStartX, posStartY);
-            lines[i]->setEnd(posEndX, posEndY);
+            line.setStart(posX, m_posY[i]);
+            line.setEnd(posX - Variables::incrementFactor, nextPosY);
             
-            path.addLineSegment(*lines[i], 6);
+            m_path.addLineSegment(line, 4);
+
         }
     } 
 }
@@ -67,7 +62,7 @@ void PitchLine::update(float frequency)
 void PitchLine::paint(juce::Graphics& g)
 {
     g.setColour(juce::Colours::orange);
-    g.fillPath(path);
+    g.fillPath(m_path);
 }
 
 void PitchLine::resized() {}
