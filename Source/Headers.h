@@ -6,6 +6,7 @@
 #include "Variables.h"
 
 #include "Oscillator.h"
+#include "Preprocess.h"
 #include "YIN.h"
 
 #include "PitchLine.h"

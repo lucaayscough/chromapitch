@@ -64,9 +64,7 @@ int ChromaPitchAudioProcessor::getCurrentProgram()
     return 0;
 }
 
-void ChromaPitchAudioProcessor::setCurrentProgram (int index)
-{
-}
+void ChromaPitchAudioProcessor::setCurrentProgram (int index) {}
 
 const juce::String ChromaPitchAudioProcessor::getProgramName (int index)
 {
@@ -78,10 +76,10 @@ void ChromaPitchAudioProcessor::changeProgramName (int index, const juce::String
 //==============================================================================
 void ChromaPitchAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
-    oscillator.prepareToPlay(4186, sampleRate);
-    
     int windowSize = std::ceil(sampleRate / (double)Variables::minimumFrequency);
-    yin.prapareToPlay(sampleRate, windowSize);
+
+    m_preprocess.prepareToPlay(sampleRate);
+    m_yin.prapareToPlay(sampleRate, windowSize);
 }
 
 void ChromaPitchAudioProcessor::releaseResources() {}
@@ -112,14 +110,13 @@ bool ChromaPitchAudioProcessor::isBusesLayoutSupported (const BusesLayout& layou
 }
 #endif
 
-void ChromaPitchAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midiMessages)
+void ChromaPitchAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midiMessages)
 {
     juce::ScopedNoDenormals noDenormals;
-    
-    //buffer.clear();
-    //oscillator.processBlock(buffer);
+    juce::AudioBuffer<float> bufferToProcess(buffer);
 
-    yin.processBlock(buffer);
+    m_preprocess.processBlock(bufferToProcess);
+    m_yin.processBlock(bufferToProcess);
     
     buffer.applyGain(0, 0, buffer.getNumSamples(), 0);
     buffer.applyGain(1, 0, buffer.getNumSamples(), 0);

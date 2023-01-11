@@ -22,6 +22,8 @@
       <FILE id="nV2vFW" name="Headers.h" compile="0" resource="0" file="Source/Headers.h"/>
       <FILE id="fFtawi" name="Variables.cpp" compile="1" resource="0" file="Source/Variables.cpp"/>
       <FILE id="lVyjOB" name="Variables.h" compile="0" resource="0" file="Source/Variables.h"/>
+      <FILE id="tzjjKv" name="Preprocess.cpp" compile="1" resource="0" file="Source/Preprocess.cpp"/>
+      <FILE id="he7bz5" name="Preprocess.h" compile="0" resource="0" file="Source/Preprocess.h"/>
       <FILE id="ulsSZ4" name="NoteBox.cpp" compile="1" resource="0" file="Source/NoteBox.cpp"/>
       <FILE id="PNJVtK" name="NoteBox.h" compile="0" resource="0" file="Source/NoteBox.h"/>
       <FILE id="gJXXtp" name="View.cpp" compile="1" resource="0" file="Source/View.cpp"/>
