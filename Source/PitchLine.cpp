@@ -29,8 +29,7 @@ void PitchLine::update(float frequency)
     
     m_path.clear();
     
-    int posX, nextPosY;
-    juce::Line<float> line;
+    int posX;
 
     for (int i = 0; i < m_posY.size(); ++i)
     {
@@ -38,31 +37,22 @@ void PitchLine::update(float frequency)
         {
             posX = getWidth() - (i * Variables::incrementFactor);
 
-            // Search for next viable Y.
-            nextPosY = m_posY[i]; 
+            juce::Point<float> p(posX, m_posY[i]);
 
-            for (int y = 1; y + i < m_posY.size() && y < 50; ++y)
+            if (m_path.isEmpty() || p.getDistanceFrom(m_path.getCurrentPosition()) > Variables::distanceThreshold)
             {
-                if (m_posY[i + y] != -1)
-                {
-                    nextPosY = m_posY[i + y];
-                    break;
-                }
-            } 
+                m_path.startNewSubPath(p);
+            }
 
-            line.setStart(posX, m_posY[i]);
-            line.setEnd(posX - Variables::incrementFactor, nextPosY);
-            
-            m_path.addLineSegment(line, 4);
-
+            m_path.lineTo(p);
         }
-    } 
+    }
 }
 
 void PitchLine::paint(juce::Graphics& g)
 {
     g.setColour(Variables::pitchLineColour);
-    g.fillPath(m_path);
+    g.strokePath(m_path, juce::PathStrokeType(3, juce::PathStrokeType::beveled, juce::PathStrokeType::rounded));
 }
 
 void PitchLine::resized() {}

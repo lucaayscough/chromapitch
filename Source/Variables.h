@@ -18,6 +18,7 @@ struct Variables
     static const juce::Colour boundingBoxColour;
     static const juce::Colour pitchLineColour; 
     static const juce::Colour textColour;
+    static const int distanceThreshold = 100;
 };
 
 
