@@ -115,11 +115,11 @@ void ChromaPitchAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, j
     juce::ScopedNoDenormals noDenormals;
     juce::AudioBuffer<float> bufferToProcess(buffer);
 
-    m_preprocess.processBlock(bufferToProcess);
+    //m_preprocess.processBlock(bufferToProcess);
     m_yin.processBlock(bufferToProcess);
     
-    buffer.applyGain(0, 0, buffer.getNumSamples(), 0);
-    buffer.applyGain(1, 0, buffer.getNumSamples(), 0);
+    //buffer.applyGain(0, 0, buffer.getNumSamples(), 0);
+    //buffer.applyGain(1, 0, buffer.getNumSamples(), 0);
 }
 
 //==============================================================================

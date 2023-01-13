@@ -13,6 +13,7 @@ public:
     void timerCallback() override;
 
     void mouseWheelMove(const juce::MouseEvent& event, const juce::MouseWheelDetails& wheel) override; 
+    void updateBounds();
     
 private:
     ChromaPitchAudioProcessor& audioProcessor;

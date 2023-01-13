@@ -5,6 +5,19 @@ PitchLine::PitchLine() {}
 
 PitchLine::~PitchLine() {}
 
+float PitchLine::getCurrentY()
+{
+    if (!m_posY.isEmpty())
+    {
+        return m_posY[0];
+    }
+
+    else
+    {
+        return -1;
+    }
+}
+
 void PitchLine::update(float frequency)
 {
     if (frequency == -1)

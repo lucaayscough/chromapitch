@@ -21,10 +21,7 @@ void YIN::setWindowSize(float windowSize)
 
 float YIN::getNextFrequency()
 {
-    auto frequency = m_frequency;
-    m_frequency = -1;
-
-    return frequency;
+    return m_frequency;
 }
 
 void YIN::prapareToPlay(float sampleRate, float windowSize)

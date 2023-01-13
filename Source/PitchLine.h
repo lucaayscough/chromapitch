@@ -7,6 +7,7 @@ public:
     PitchLine();
     ~PitchLine();
     
+    float getCurrentY();
     void update(float frequency);
 
     void paint(juce::Graphics& g) override;

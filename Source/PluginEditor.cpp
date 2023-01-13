@@ -27,6 +27,19 @@ void ChromaPitchAudioProcessorEditor::timerCallback()
 {
     auto frequency = audioProcessor.m_yin.getNextFrequency();
     m_pitchLine.update(frequency);
+    
+    
+    if (m_pitchLine.getCurrentY() < -m_pitchLine.getY() && m_pitchLine.getCurrentY() != -1)
+    {
+        ++m_scrollPosY;
+        updateBounds();
+    }
+
+    else if (m_pitchLine.getCurrentY() > -m_pitchLine.getY() + Variables::windowHeight && m_pitchLine.getCurrentY() != -1)
+    {
+        --m_scrollPosY;
+        updateBounds();
+    }
 
     repaint();
 }
@@ -45,6 +58,11 @@ void ChromaPitchAudioProcessorEditor::mouseWheelMove(const juce::MouseEvent& eve
         m_scrollPosY = 0;
     }
 
+    updateBounds();
+}
+
+void ChromaPitchAudioProcessorEditor::updateBounds()
+{
     m_view.setBounds(0, m_scrollPosY, getWidth(), Variables::numBoxes * Variables::noteBoxHeight);
     m_pitchLine.setBounds(0, m_scrollPosY, getWidth(), Variables::numBoxes * Variables::noteBoxHeight);  
 }
