@@ -1,6 +1,7 @@
 #pragma once
 
 #include <JuceHeader.h>
+#include <Eigen/Dense>
 
 #include "Midi.h"
 #include "Variables.h"
