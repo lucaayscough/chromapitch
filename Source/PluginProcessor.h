@@ -49,7 +49,8 @@ public:
 
 private:
     Preprocess m_preprocess;
-
+    int m_lastNote;
+    
 public:
     YIN m_yin;
     

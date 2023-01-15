@@ -114,12 +114,38 @@ void ChromaPitchAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, j
 {
     juce::ScopedNoDenormals noDenormals;
     juce::AudioBuffer<float> bufferToProcess(buffer);
-
+    
     //m_preprocess.processBlock(bufferToProcess);
     m_yin.processBlock(bufferToProcess);
     
     //buffer.applyGain(0, 0, buffer.getNumSamples(), 0);
     //buffer.applyGain(1, 0, buffer.getNumSamples(), 0);
+
+    midiMessages.clear();
+
+    auto frequency = m_yin.getNextFrequency();
+
+    if (frequency != -1)
+    {
+        int note = Chroma::Midi::frequencyToMidi(frequency);
+       
+        if (note != m_lastNote)
+        {
+            juce::MidiMessage noteOff(0x80, m_lastNote, 100);
+            juce::MidiMessage noteOn(0x90, note, 100);
+
+            m_lastNote = note;
+
+            midiMessages.addEvent(noteOn, 0);
+            midiMessages.addEvent(noteOff, 0);
+        }
+    }
+    
+    else
+    {
+        juce::MidiMessage noteOff(0x80, m_lastNote, 100);
+        midiMessages.addEvent(noteOff, 0);
+    }
 }
 
 //==============================================================================
