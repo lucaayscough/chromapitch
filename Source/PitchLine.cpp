@@ -60,6 +60,8 @@ void PitchLine::update(float frequency)
             m_path.lineTo(p);
         }
     }
+
+    repaint();
 }
 
 void PitchLine::paint(juce::Graphics& g)

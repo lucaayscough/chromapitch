@@ -9,6 +9,8 @@
     <GROUP id="{A2A1EDFB-4B96-DCC5-B971-F8C78EF2394D}" name="Source">
       <FILE id="EdBwOV" name="PitchLine.cpp" compile="1" resource="0" file="Source/PitchLine.cpp"/>
       <FILE id="EaXMEO" name="PitchLine.h" compile="0" resource="0" file="Source/PitchLine.h"/>
+      <FILE id="n3xPc0" name="EKFPitch.cpp" compile="1" resource="0" file="Source/EKFPitch.cpp"/>
+      <FILE id="fmD2bp" name="EKFPitch.h" compile="0" resource="0" file="Source/EKFPitch.h"/>
       <FILE id="UTFAPe" name="YIN.cpp" compile="1" resource="0" file="Source/YIN.cpp"/>
       <FILE id="s5vCD7" name="YIN.h" compile="0" resource="0" file="Source/YIN.h"/>
       <FILE id="iZ0LAp" name="PluginProcessor.cpp" compile="1" resource="0"
@@ -52,6 +54,7 @@
         <MODULEPATH id="juce_graphics" path="../../../../Applications/JUCE/modules"/>
         <MODULEPATH id="juce_gui_basics" path="../../../../Applications/JUCE/modules"/>
         <MODULEPATH id="juce_gui_extra" path="../../../../Applications/JUCE/modules"/>
+        <MODULEPATH id="juce_dsp" path="../../../../Applications/JUCE/modules"/>
       </MODULEPATHS>
     </XCODE_MAC>
   </EXPORTFORMATS>
@@ -65,6 +68,7 @@
     <MODULE id="juce_audio_utils" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
     <MODULE id="juce_core" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
     <MODULE id="juce_data_structures" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_dsp" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
     <MODULE id="juce_events" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
     <MODULE id="juce_graphics" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
     <MODULE id="juce_gui_basics" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>

@@ -25,10 +25,9 @@ void ChromaPitchAudioProcessorEditor::resized()
 
 void ChromaPitchAudioProcessorEditor::timerCallback()
 {
-    auto frequency = audioProcessor.m_yin.getNextFrequency();
+    auto frequency = audioProcessor.m_pitchDetector.getNextFrequency();
     m_pitchLine.update(frequency);
-    
-    
+ 
     if (m_pitchLine.getCurrentY() < -m_pitchLine.getY() && m_pitchLine.getCurrentY() != -1)
     {
         ++m_scrollPosY;
@@ -40,8 +39,6 @@ void ChromaPitchAudioProcessorEditor::timerCallback()
         --m_scrollPosY;
         updateBounds();
     }
-
-    repaint();
 }
 
 void ChromaPitchAudioProcessorEditor::mouseWheelMove(const juce::MouseEvent& event, const juce::MouseWheelDetails& wheel)
@@ -65,4 +62,7 @@ void ChromaPitchAudioProcessorEditor::updateBounds()
 {
     m_view.setBounds(0, m_scrollPosY, getWidth(), Variables::numBoxes * Variables::noteBoxHeight);
     m_pitchLine.setBounds(0, m_scrollPosY, getWidth(), Variables::numBoxes * Variables::noteBoxHeight);  
+    
+    m_view.repaint();
+    m_pitchLine.repaint();
 }

@@ -52,7 +52,8 @@ private:
     int m_lastNote;
     
 public:
-    YIN m_yin;
+    YIN m_pitchDetector;
+    //EKFPitch m_pitchDetector;
     
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ChromaPitchAudioProcessor)
 };
