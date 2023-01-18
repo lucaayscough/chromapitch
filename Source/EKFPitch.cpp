@@ -247,11 +247,10 @@ void EKFPitch::processBlock(juce::AudioBuffer<float>& buffer)
         else{
             f0 = kalmanFilter(channelData[i]);
             pitch[pitchIndex++] = f0 < minPitch ? 0.0f : f0;
-            
         }
-        frequency = pitch[pitchIndex];
-        std::cout << frequency << std::endl;
     }
+
+    frequency = pitch[pitchIndex - 1];
     nBuffer++;
     
     prevBufferSilent = curBufferSilent;
@@ -259,16 +258,5 @@ void EKFPitch::processBlock(juce::AudioBuffer<float>& buffer)
 
 float EKFPitch::getNextFrequency()
 {
-    
-    
-    if (frequency == 0)
-    {
-        return -1;
-    }
-    
-    else
-    {
-        return frequency;
-    }
-    
+    return frequency.load();
 }

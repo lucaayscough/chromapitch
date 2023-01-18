@@ -80,7 +80,6 @@ void ChromaPitchAudioProcessor::prepareToPlay (double sampleRate, int samplesPer
 
     m_preprocess.prepareToPlay(sampleRate);
     m_pitchDetector.prapareToPlay(sampleRate, windowSize);  //YIN
-    //m_pitchDetector.prepareToPlay(sampleRate, samplesPerBlock); //Kalman
 }
 
 void ChromaPitchAudioProcessor::releaseResources() {}
@@ -119,9 +118,6 @@ void ChromaPitchAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, j
     //m_preprocess.processBlock(bufferToProcess);
     m_pitchDetector.processBlock(bufferToProcess);
     
-    //buffer.applyGain(0, 0, buffer.getNumSamples(), 0);
-    //buffer.applyGain(1, 0, buffer.getNumSamples(), 0);
-
     midiMessages.clear();
 
     auto frequency = m_pitchDetector.getNextFrequency();

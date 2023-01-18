@@ -39,7 +39,7 @@ private:
     bool curBufferSilent;       //flag to check if current buffer is silent
     int pitchIndex = 0;
     int nBuffer;                //keep track of buffers
-    float frequency = -1;
+    std::atomic<float> frequency;
 
 private:
     float sampleRate;                           //sample rate
