@@ -29,8 +29,10 @@ void PitchLine::update(float frequency)
     {
         int note = Chroma::Midi::frequencyToMidi(frequency);
         int cents = Chroma::Midi::centsFromNearestNote(frequency);
+
+        float noteBoxHeight = getHeight() / Variables::numBoxes;
         
-        int posY = (Variables::higherKeyBound - note) * Variables::noteBoxHeight - Variables::noteBoxHeight / 2 - ((cents / 50.0) * (Variables::noteBoxHeight / 2.0));
+        int posY = (Variables::higherKeyBound - note) * noteBoxHeight - noteBoxHeight / 2 - ((cents / 50.0) * (noteBoxHeight / 2.0));
 
         m_posY.insert(0, posY);
     }

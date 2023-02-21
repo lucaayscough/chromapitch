@@ -17,8 +17,9 @@ void View::paint(juce::Graphics& g) {}
 
 void View::resized()
 {
+    float noteBoxHeight = getHeight() / Variables::numBoxes;
     for (int i = 0; i < Variables::numBoxes; ++i)     
     {
-        m_noteBoxes[i]->setBounds(0, i * Variables::noteBoxHeight, getWidth(), Variables::noteBoxHeight);
+        m_noteBoxes[i]->setBounds(0, i * noteBoxHeight, getWidth(), noteBoxHeight);
     }
 }

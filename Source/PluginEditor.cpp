@@ -19,8 +19,8 @@ void ChromaPitchAudioProcessorEditor::paint(juce::Graphics& g) {}
 
 void ChromaPitchAudioProcessorEditor::resized()
 {
-    m_view.setBounds(0, m_scrollPosY, getWidth(), Variables::numBoxes * Variables::noteBoxHeight);
-    m_pitchLine.setBounds(0, m_scrollPosY, getWidth(), Variables::numBoxes * Variables::noteBoxHeight);  
+    m_view.setBounds(0, m_scrollPosY, getWidth(), Variables::numBoxes * m_noteBoxHeight);
+    m_pitchLine.setBounds(0, m_scrollPosY, getWidth(), Variables::numBoxes * m_noteBoxHeight);  
 }
 
 void ChromaPitchAudioProcessorEditor::timerCallback()
@@ -45,9 +45,9 @@ void ChromaPitchAudioProcessorEditor::mouseWheelMove(const juce::MouseEvent& eve
 {
     m_scrollPosY += wheel.deltaY * 80;      
 
-    if (m_scrollPosY < -(Variables::numBoxes * Variables::noteBoxHeight - getHeight()))
+    if (m_scrollPosY < -(Variables::numBoxes * m_noteBoxHeight - getHeight()))
     {
-        m_scrollPosY = -(Variables::numBoxes * Variables::noteBoxHeight - getHeight());
+        m_scrollPosY = -(Variables::numBoxes * m_noteBoxHeight - getHeight());
     }
     
     else if (m_scrollPosY > 0)
@@ -58,10 +58,27 @@ void ChromaPitchAudioProcessorEditor::mouseWheelMove(const juce::MouseEvent& eve
     updateBounds();
 }
 
+void ChromaPitchAudioProcessorEditor::mouseMagnify(const juce::MouseEvent& event, float scaleFactor)
+{
+    if (scaleFactor > 1.0f && m_noteBoxHeight < 60.0f)
+    {
+        m_noteBoxHeight += 1.0f;
+    }
+    
+    else if (scaleFactor < 1.0f && m_noteBoxHeight > 20.0f)
+    {
+        m_noteBoxHeight -= 1.0f;
+    }
+
+    std::cout << m_noteBoxHeight << std::endl;
+
+    updateBounds();
+}
+
 void ChromaPitchAudioProcessorEditor::updateBounds()
 {
-    m_view.setBounds(0, m_scrollPosY, getWidth(), Variables::numBoxes * Variables::noteBoxHeight);
-    m_pitchLine.setBounds(0, m_scrollPosY, getWidth(), Variables::numBoxes * Variables::noteBoxHeight);  
+    m_view.setBounds(0, m_scrollPosY, getWidth(), Variables::numBoxes * m_noteBoxHeight);
+    m_pitchLine.setBounds(0, m_scrollPosY, getWidth(), Variables::numBoxes * m_noteBoxHeight);  
     
     m_view.repaint();
     m_pitchLine.repaint();
