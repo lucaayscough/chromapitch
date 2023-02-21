@@ -3,11 +3,13 @@
 
 struct Variables
 {
+    static const bool outputMidi = false;
     static const int incrementFactor = 2;
     static const int windowWidth = 800;
     static const int windowHeight = 600;
     static const int minimumFrequency = 50;
     static const int maximumFrequency = 5000;
+    static constexpr float rmsThreshold = 0.01f;
     
     static const int lowerKeyBound = 21;
     static const int higherKeyBound = 109;

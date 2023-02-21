@@ -19,6 +19,11 @@ void YIN::setWindowSize(float windowSize)
     m_buffer.ensureStorageAllocated(m_bufferSize);
 }
 
+void YIN::setFrequency(float frequency)
+{
+    m_frequency = frequency;
+}
+
 float YIN::getNextFrequency()
 {
     return m_frequency;
@@ -31,7 +36,6 @@ void YIN::prapareToPlay(float sampleRate, float windowSize)
 
     m_yinBuffer.clear();
     m_yinBuffer.ensureStorageAllocated(m_bufferSize);
-
 
     m_buffer.clear();
     m_buffer.ensureStorageAllocated(m_bufferSize);
@@ -173,6 +177,7 @@ void YIN::detectFrequency()
 
 void YIN::processBlock(juce::AudioBuffer<float>& signal)
 {
+    m_isReset = false;
     auto* channelData = signal.getWritePointer(0);
     
     // Fill buffer with incoming audio data.
@@ -194,5 +199,16 @@ void YIN::processBlock(juce::AudioBuffer<float>& signal)
             m_yinBuffer.clearQuick(); 
             m_buffer.removeRange(0, m_windowSize);
         }
+    }
+}
+
+void YIN::reset()
+{
+    if (m_isReset == false)
+    {
+        m_isReset = true;
+        m_frequency = -1;        
+        m_buffer.clear();
+        m_yinBuffer.clear();
     }
 }

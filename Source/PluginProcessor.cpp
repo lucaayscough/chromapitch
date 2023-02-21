@@ -115,6 +115,12 @@ void ChromaPitchAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, j
     juce::ScopedNoDenormals noDenormals;
     juce::AudioBuffer<float> bufferToProcess(buffer);
     
+    if (bufferToProcess.getRMSLevel(0, 0, bufferToProcess.getNumSamples()) < Variables::rmsThreshold)
+    {
+        m_pitchDetector.reset();
+        return;
+    }
+    
     //m_preprocess.processBlock(bufferToProcess);
     m_pitchDetector.processBlock(bufferToProcess);
     
@@ -122,27 +128,31 @@ void ChromaPitchAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, j
 
     auto frequency = m_pitchDetector.getNextFrequency();
 
-    if (frequency != -1)
+    // Midi output.
+    if (Variables::outputMidi)
     {
-        int note = Chroma::Midi::frequencyToMidi(frequency);
-       
-        if (note != m_lastNote)
+        if (frequency != -1)
+        {
+            int note = Chroma::Midi::frequencyToMidi(frequency);
+        
+            if (note != m_lastNote)
+            {
+                juce::MidiMessage noteOff(0x80, m_lastNote, 100);
+                juce::MidiMessage noteOn(0x90, note, 100);
+
+                m_lastNote = note;
+
+                midiMessages.addEvent(noteOn, 0);
+                midiMessages.addEvent(noteOff, 0);
+            }
+        }
+        
+        else
         {
             juce::MidiMessage noteOff(0x80, m_lastNote, 100);
-            juce::MidiMessage noteOn(0x90, note, 100);
-
-            m_lastNote = note;
-
-            midiMessages.addEvent(noteOn, 0);
             midiMessages.addEvent(noteOff, 0);
         }
-    }
-    
-    else
-    {
-        juce::MidiMessage noteOff(0x80, m_lastNote, 100);
-        midiMessages.addEvent(noteOff, 0);
-    }
+    }   
 }
 
 //==============================================================================
