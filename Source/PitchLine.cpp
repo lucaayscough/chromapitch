@@ -1,7 +1,11 @@
 #include "Headers.h"
 
 
-PitchLine::PitchLine() {}
+PitchLine::PitchLine()
+{
+    m_gradient.addColour(0.0, juce::Colours::green);
+    m_gradient.addColour(1.0, juce::Colours::red);
+}
 
 PitchLine::~PitchLine() {}
 
@@ -20,6 +24,7 @@ float PitchLine::getCurrentY()
 
 void PitchLine::update(float frequency)
 {
+    m_frequency = frequency;
     if (frequency == -1)
     {
         m_posY.insert(0, -1);
@@ -68,7 +73,12 @@ void PitchLine::update(float frequency)
 
 void PitchLine::paint(juce::Graphics& g)
 {
-    g.setColour(Variables::pitchLineColour);
+    int cents = Chroma::Midi::centsFromNearestNote(m_frequency);
+    cents = std::abs(cents);
+    double pos = (double)cents / 50.0;
+
+    g.setColour(m_gradient.getColourAtPosition(pos));
+    //g.setColour(Variables::pitchLineColour);
     g.strokePath(m_path, juce::PathStrokeType(3, juce::PathStrokeType::beveled, juce::PathStrokeType::rounded));
 }
 
