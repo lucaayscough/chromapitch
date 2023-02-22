@@ -63,16 +63,14 @@ void ChromaPitchAudioProcessorEditor::mouseMagnify(const juce::MouseEvent& event
     if (scaleFactor > 1.0f && m_noteBoxHeight < 60.0f)
     {
         m_noteBoxHeight += 1.0f;
-        m_scrollPosY += 1.0f;
+        m_scrollPosY -= Variables::numBoxes;
     }
     
     else if (scaleFactor < 1.0f && m_noteBoxHeight > 20.0f)
     {
         m_noteBoxHeight -= 1.0f;
-        m_scrollPosY -= 1.0f;
+        m_scrollPosY += Variables::numBoxes;
     }
-
-    std::cout << m_noteBoxHeight << std::endl;
 
     updateBounds();
 }

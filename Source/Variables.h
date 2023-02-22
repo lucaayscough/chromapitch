@@ -3,7 +3,7 @@
 
 struct Variables
 {
-    static const bool outputMidi = false;
+    static const bool outputMidi = true;
     static const int incrementFactor = 2;
     static const int windowWidth = 800;
     static const int windowHeight = 600;
