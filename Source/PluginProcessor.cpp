@@ -76,10 +76,7 @@ void ChromaPitchAudioProcessor::changeProgramName (int index, const juce::String
 //==============================================================================
 void ChromaPitchAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
-    int windowSize = std::ceil(sampleRate / (double)Variables::minimumFrequency);
-
-    m_preprocess.prepareToPlay(sampleRate);
-    m_pitchDetector.prapareToPlay(sampleRate, windowSize);  //YIN
+    m_frequencyEstimator.prepareToPlay(sampleRate, 50.f, 5000.f);
 }
 
 void ChromaPitchAudioProcessor::releaseResources() {}
@@ -113,17 +110,10 @@ bool ChromaPitchAudioProcessor::isBusesLayoutSupported (const BusesLayout& layou
 void ChromaPitchAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midiMessages)
 {
     juce::ScopedNoDenormals noDenormals;
-    juce::AudioBuffer<float> bufferToProcess(buffer);
     
-    if (bufferToProcess.getRMSLevel(0, 0, bufferToProcess.getNumSamples()) < Variables::rmsThreshold)
-    {
-        m_pitchDetector.reset();
-        return;
-    }
-    
-    //m_preprocess.processBlock(bufferToProcess);
-    m_pitchDetector.processBlock(bufferToProcess);
-    
+    m_frequencyEstimator.processBlock(buffer); 
+
+    /*
     midiMessages.clear();
 
     auto frequency = m_pitchDetector.getNextFrequency();
@@ -152,7 +142,8 @@ void ChromaPitchAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, j
             juce::MidiMessage noteOff(0x80, m_lastNote, 100);
             midiMessages.addEvent(noteOff, 0);
         }
-    }   
+    }
+     */
 }
 
 //==============================================================================
@@ -176,4 +167,9 @@ void ChromaPitchAudioProcessor::setStateInformation (const void* data, int sizeI
 juce::AudioProcessor* JUCE_CALLTYPE createPluginFilter()
 {
     return new ChromaPitchAudioProcessor();
+}
+
+Chroma::NoteInfo ChromaPitchAudioProcessor::getLastNote()
+{
+    return m_frequencyEstimator.getLastNote();
 }

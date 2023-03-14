@@ -1,15 +1,13 @@
 #pragma once
 
 #include <JuceHeader.h>
-#include <Eigen/Dense>
+#include "q/pitch/pitch_detector.hpp"
 
-#include "Midi.h"
+#include "Chroma/Midi.h"
 #include "Variables.h"
 
-#include "Oscillator.h"
-#include "Preprocess.h"
 #include "YIN.h"
-#include "EKFPitch.h"
+#include "FrequencyEstimator.h"
 
 #include "PitchLine.h"
 #include "NoteBox.h"
