@@ -5,10 +5,10 @@ namespace Chroma
 {
     struct NoteInfo
     {
-        double frequency = 0;
-        int midiNoteNumber = 0;
+        float frequency = -1;
+        int note = -1;
+        int cents = -1;
         juce::String noteName;
-        int cents = 0;
     };
 
     class Midi

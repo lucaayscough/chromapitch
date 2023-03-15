@@ -54,9 +54,20 @@ void FrequencyEstimator::updateFrequency()
 
 void FrequencyEstimator::updateNote()
 {
-    if (m_note.frequency != getFrequency())
+    auto frequency = getFrequency();
+
+    if (m_note.frequency != frequency)
     {
-        m_note.frequency = getFrequency();
+        m_note.frequency = frequency;
+        m_note.note = Chroma::Midi::frequencyToMidi(frequency);
+        m_note.cents = Chroma::Midi::centsFromNearestNote(frequency); 
+    }
+
+    else if (frequency == -1)
+    {
+        m_note.frequency = -1;
+        m_note.note = -1;
+        m_note.cents = -1;
     }
 }
 

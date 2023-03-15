@@ -76,7 +76,7 @@ void ChromaPitchAudioProcessor::changeProgramName (int index, const juce::String
 //==============================================================================
 void ChromaPitchAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
-    m_frequencyEstimator.prepareToPlay(sampleRate, 50.f, 5000.f);
+    m_frequencyEstimator.prepareToPlay(sampleRate, Variables::minimumFrequency, Variables::maximumFrequency);
 }
 
 void ChromaPitchAudioProcessor::releaseResources() {}

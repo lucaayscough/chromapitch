@@ -22,23 +22,19 @@ float PitchLine::getCurrentY()
     }
 }
 
-void PitchLine::update(float frequency)
+void PitchLine::update(Chroma::NoteInfo& note)
 {
-    m_frequency = frequency;
-    if (frequency == -1)
+    m_note = note;
+
+    if (m_note.frequency == -1)
     {
         m_posY.insert(0, -1);
     }
 
     else
     {
-        int note = Chroma::Midi::frequencyToMidi(frequency);
-        int cents = Chroma::Midi::centsFromNearestNote(frequency);
-
         float noteBoxHeight = getHeight() / Variables::numBoxes;
-        
-        int posY = (Variables::higherKeyBound - note) * noteBoxHeight - noteBoxHeight / 2 - ((cents / 50.0) * (noteBoxHeight / 2.0));
-
+        int posY = (Variables::higherKeyBound - m_note.note) * noteBoxHeight - noteBoxHeight / 2 - ((m_note.cents / 50.0) * (noteBoxHeight / 2.0));
         m_posY.insert(0, posY);
     }
     
@@ -73,9 +69,8 @@ void PitchLine::update(float frequency)
 
 void PitchLine::paint(juce::Graphics& g)
 {
-    int cents = Chroma::Midi::centsFromNearestNote(m_frequency);
-    cents = std::abs(cents);
-    double pos = (double)cents / 50.0;
+    double cents = std::abs(m_note.cents);
+    double pos = cents / 50.0;
 
     g.setColour(m_gradient.getColourAtPosition(pos));
     //g.setColour(Variables::pitchLineColour);
