@@ -48,6 +48,8 @@ public:
 
 private:
     FrequencyEstimator m_frequencyEstimator;
+    MPE m_MPE;
+
     int m_lastNote;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ChromaPitchAudioProcessor)

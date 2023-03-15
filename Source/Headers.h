@@ -8,6 +8,7 @@
 
 #include "YIN.h"
 #include "FrequencyEstimator.h"
+#include "MPE.h"
 
 #include "PitchLine.h"
 #include "NoteBox.h"

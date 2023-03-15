@@ -4,12 +4,10 @@
 FrequencyEstimator::FrequencyEstimator() {}
 FrequencyEstimator::~FrequencyEstimator() {}
 
-Chroma::NoteInfo FrequencyEstimator::getLastNote()
+Chroma::NoteInfo& FrequencyEstimator::getLastNote()
 {
-    Chroma::NoteInfo note;
-    note.frequency = m_bacf->get_frequency();
-
-    return note;
+    updateNote();
+    return m_note;
 }
 
 void FrequencyEstimator::prepareToPlay(double sampleRate, float lowestFrequency, float highestFrequency)
@@ -26,15 +24,39 @@ void FrequencyEstimator::processBlock(juce::AudioBuffer<float>& buffer)
     if (buffer.getRMSLevel(0, 0, buffer.getNumSamples()) < Variables::rmsThreshold)
     {
         m_bacf->reset();
+        updateFrequency();
         return;
     }
     
     auto* channelData = buffer.getWritePointer(0);
     
-    auto& pd = *m_bacf;
-    
     for (int i = 0; i < buffer.getNumSamples(); ++i)
     {
-        pd(channelData[i]);
+        (*m_bacf)(channelData[i]);
+        updateFrequency();
     }
 }
+
+float FrequencyEstimator::getFrequency()
+{
+    return m_frequency.load();
+}
+
+void FrequencyEstimator::updateFrequency()
+{
+    m_frequency = m_bacf->get_frequency();
+    
+    if (m_frequency == 0.f)
+    {
+        m_frequency = -1;
+    }
+}
+
+void FrequencyEstimator::updateNote()
+{
+    if (m_note.frequency != getFrequency())
+    {
+        m_note.frequency = getFrequency();
+    }
+}
+

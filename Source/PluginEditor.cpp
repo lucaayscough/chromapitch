@@ -26,7 +26,6 @@ void ChromaPitchAudioProcessorEditor::resized()
 void ChromaPitchAudioProcessorEditor::timerCallback()
 {
     auto frequency = audioProcessor.getLastNote().frequency;
-    if (frequency == 0) frequency = -1;
     
     m_pitchLine.update(frequency);
  
