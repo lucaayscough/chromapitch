@@ -111,7 +111,10 @@ void ChromaPitchAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, j
 {
     juce::ScopedNoDenormals noDenormals;
     
-    m_frequencyEstimator.processBlock(buffer); 
+    m_frequencyEstimator.processBlock(buffer);
+
+    auto note = getLastNote();
+    m_MPE.processBlock(midiMessages, note);
 }
 
 //==============================================================================

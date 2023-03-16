@@ -8,7 +8,6 @@ namespace Chroma
         float frequency = -1;
         int note = -1;
         int cents = -1;
-        juce::String noteName;
     };
 
     class Midi
@@ -42,6 +41,31 @@ namespace Chroma
         static int centsFromNearestNote(const double frequency)
         {
             return centsFromA4(frequency) - 100 * semitonesFromA4(frequency); 
+        }
+
+        static int distanceInCents(Chroma::NoteInfo& note_a, Chroma::NoteInfo& note_b)
+        {
+            auto a = (note_a.note * 100) + note_a.cents;
+            auto b = (note_b.note * 100) + note_b.cents;
+
+            return b - a;
+        }
+
+        static int getPitchBend(int distanceInCents)
+        {
+            DBG(distanceInCents);
+            return 8192 + (static_cast<double> (distanceInCents) * 1.70666666);
+        }
+
+        static void printMidiBuffer(juce::MidiBuffer& buffer)
+        {
+            for (const juce::MidiMessageMetadata metadata : buffer)
+            {
+                if (metadata.numBytes == 3)
+                {
+                    juce::Logger::writeToLog(metadata.getMessage().getDescription());
+                }
+            }
         }
     };
 }

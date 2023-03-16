@@ -3,3 +3,4 @@ JuceLibraryCode/
 .DS_Store
 .gitignore
 Dependencies/
+.vscode/
