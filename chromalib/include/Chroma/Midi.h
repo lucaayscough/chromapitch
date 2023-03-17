@@ -53,8 +53,36 @@ namespace Chroma
 
         static int getPitchBend(int distanceInCents)
         {
-            DBG(distanceInCents);
             return 8192 + (static_cast<double> (distanceInCents) * 1.70666666);
+        }
+
+        static juce::MidiMessage getNoteOnMessage(Chroma::NoteInfo& note)
+        {
+            juce::MidiMessage noteOn(0x90, note.note, 100);
+            noteOn.setChannel(2);
+
+            return noteOn;
+        }
+
+        static juce::MidiMessage getNoteOffMessage(Chroma::NoteInfo& note)
+        {
+            juce::MidiMessage noteOff(0x80, note.note, 100);
+            noteOff.setChannel(2);
+
+            return noteOff;
+        }            
+
+        static juce::MidiMessage getPitchBendMessage(Chroma::NoteInfo& note_a, Chroma::NoteInfo& note_b)
+        {
+            auto pitchBendVal = Chroma::Midi::getPitchBend(Chroma::Midi::distanceInCents(note_a, note_b));
+            
+            int msb = (pitchBendVal >> 7) & 0x7F;
+            int lsb = pitchBendVal & 0x7F;
+
+            juce::MidiMessage pitchBend(0xE0, lsb, msb);
+            pitchBend.setChannel(2);
+
+            return pitchBend;
         }
 
         static void printMidiBuffer(juce::MidiBuffer& buffer)
