@@ -5,7 +5,7 @@ MPE::MPE() {}
 
 MPE::~MPE() {}
 
-void MPE::processBlock(juce::MidiBuffer& midiMessages, Chroma::NoteInfo& note)
+void MPE::processBlock(juce::MidiBuffer& midiMessages, chroma::NoteInfo& note)
 {
     midiMessages.clear();
 
@@ -23,8 +23,8 @@ void MPE::processBlock(juce::MidiBuffer& midiMessages, Chroma::NoteInfo& note)
         m_isNoteOn = true;
         m_lastNote = note;
 
-        auto pitchBend = Chroma::Midi::getPitchBendMessage(m_lastNote, note);            
-        auto noteOn = Chroma::Midi::getNoteOnMessage(note); 
+        auto pitchBend = chroma::Midi::getPitchBendMessage(m_lastNote, note);
+        auto noteOn = chroma::Midi::getNoteOnMessage(note);
 
         midiMessages.addEvent(pitchBend, 0);
         midiMessages.addEvent(noteOn, 0);
@@ -33,13 +33,13 @@ void MPE::processBlock(juce::MidiBuffer& midiMessages, Chroma::NoteInfo& note)
     else if (note.frequency == -1 && m_isNoteOn == true)
     {
         m_isNoteOn = false;
-        auto noteOff = Chroma::Midi::getNoteOffMessage(m_lastNote); 
+        auto noteOff = chroma::Midi::getNoteOffMessage(m_lastNote);
         midiMessages.addEvent(noteOff, 0);
     }
 
     else if (m_isNoteOn)
     {
-        auto pitchBend = Chroma::Midi::getPitchBendMessage(m_lastNote, note);    
+        auto pitchBend = chroma::Midi::getPitchBendMessage(m_lastNote, note);    
         
         pitchBend.setChannel(2);
         midiMessages.addEvent(pitchBend, 0);

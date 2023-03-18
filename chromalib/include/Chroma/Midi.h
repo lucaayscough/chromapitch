@@ -1,7 +1,7 @@
 #pragma once
 
 
-namespace Chroma
+namespace chroma
 {
     struct NoteInfo
     {
@@ -43,7 +43,7 @@ namespace Chroma
             return centsFromA4(frequency) - 100 * semitonesFromA4(frequency); 
         }
 
-        static int distanceInCents(Chroma::NoteInfo& note_a, Chroma::NoteInfo& note_b)
+        static int distanceInCents(chroma::NoteInfo& note_a, chroma::NoteInfo& note_b)
         {
             auto a = (note_a.note * 100) + note_a.cents;
             auto b = (note_b.note * 100) + note_b.cents;
@@ -56,7 +56,7 @@ namespace Chroma
             return 8192 + (static_cast<double> (distanceInCents) * 1.70666666);
         }
 
-        static juce::MidiMessage getNoteOnMessage(Chroma::NoteInfo& note)
+        static juce::MidiMessage getNoteOnMessage(chroma::NoteInfo& note)
         {
             juce::MidiMessage noteOn(0x90, note.note, 100);
             noteOn.setChannel(2);
@@ -64,7 +64,7 @@ namespace Chroma
             return noteOn;
         }
 
-        static juce::MidiMessage getNoteOffMessage(Chroma::NoteInfo& note)
+        static juce::MidiMessage getNoteOffMessage(chroma::NoteInfo& note)
         {
             juce::MidiMessage noteOff(0x80, note.note, 100);
             noteOff.setChannel(2);
@@ -72,9 +72,9 @@ namespace Chroma
             return noteOff;
         }            
 
-        static juce::MidiMessage getPitchBendMessage(Chroma::NoteInfo& note_a, Chroma::NoteInfo& note_b)
+        static juce::MidiMessage getPitchBendMessage(chroma::NoteInfo& note_a, chroma::NoteInfo& note_b)
         {
-            auto pitchBendVal = Chroma::Midi::getPitchBend(Chroma::Midi::distanceInCents(note_a, note_b));
+            auto pitchBendVal = chroma::Midi::getPitchBend(chroma::Midi::distanceInCents(note_a, note_b));
             
             int msb = (pitchBendVal >> 7) & 0x7F;
             int lsb = pitchBendVal & 0x7F;

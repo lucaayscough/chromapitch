@@ -143,7 +143,7 @@ juce::AudioProcessor* JUCE_CALLTYPE createPluginFilter()
     return new ChromaPitchAudioProcessor();
 }
 
-Chroma::NoteInfo ChromaPitchAudioProcessor::getLastNote()
+chroma::NoteInfo ChromaPitchAudioProcessor::getLastNote()
 {
     return m_frequencyEstimator.getLastNote();
 }

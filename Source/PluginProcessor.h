@@ -44,7 +44,7 @@ public:
     void getStateInformation (juce::MemoryBlock& destData) override;
     void setStateInformation (const void* data, int sizeInBytes) override;
 
-    Chroma::NoteInfo getLastNote();
+    chroma::NoteInfo getLastNote();
 
 private:
     FrequencyEstimator m_frequencyEstimator;

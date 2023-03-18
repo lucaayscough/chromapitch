@@ -4,7 +4,7 @@
 FrequencyEstimator::FrequencyEstimator() {}
 FrequencyEstimator::~FrequencyEstimator() {}
 
-Chroma::NoteInfo& FrequencyEstimator::getLastNote()
+chroma::NoteInfo& FrequencyEstimator::getLastNote()
 {
     updateNote();
     return m_note;
@@ -59,8 +59,8 @@ void FrequencyEstimator::updateNote()
     if (m_note.frequency != frequency)
     {
         m_note.frequency = frequency;
-        m_note.note = Chroma::Midi::frequencyToMidi(frequency);
-        m_note.cents = Chroma::Midi::centsFromNearestNote(frequency); 
+        m_note.note = chroma::Midi::frequencyToMidi(frequency);
+        m_note.cents = chroma::Midi::centsFromNearestNote(frequency); 
     }
 
     else if (frequency == -1)

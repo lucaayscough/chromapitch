@@ -22,7 +22,7 @@ float PitchLine::getCurrentY()
     }
 }
 
-void PitchLine::update(Chroma::NoteInfo& note)
+void PitchLine::update(chroma::NoteInfo& note)
 {
     m_note = note;
 
