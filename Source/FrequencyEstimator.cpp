@@ -35,7 +35,7 @@ void FrequencyEstimator::processBlock(juce::AudioBuffer<float>& buffer)
     for (int i = 0; i < buffer.getNumSamples(); ++i)
     {
         auto isReady = (*m_bacf)(channelData[i]);
-        auto isReady2 = (*m_bacf2)(channelData[i]);
+        auto isReady2 = (*m_bacf2)(channelData[i] * -1);
 
         if (isReady && isReady2)
         {
