@@ -17,6 +17,7 @@ void FrequencyEstimator::prepareToPlay(double sampleRate, float lowestFrequency,
     cycfi::q::decibel hysteresis(0);
     
     m_bacf = std::make_shared<cycfi::q::pitch_detector>(lowest_freq, highest_freq, sampleRate, hysteresis);
+    m_bacf2 = std::make_shared<cycfi::q::pitch_detector>(lowest_freq, highest_freq, sampleRate, hysteresis);
 }
 
 void FrequencyEstimator::processBlock(juce::AudioBuffer<float>& buffer)
@@ -24,16 +25,37 @@ void FrequencyEstimator::processBlock(juce::AudioBuffer<float>& buffer)
     if (buffer.getRMSLevel(0, 0, buffer.getNumSamples()) < Variables::rmsThreshold)
     {
         m_bacf->reset();
-        updateFrequency();
+        m_bacf2->reset();
+        updateFrequency(-1);
         return;
     }
-    
+   
     auto* channelData = buffer.getWritePointer(0);
     
     for (int i = 0; i < buffer.getNumSamples(); ++i)
     {
-        (*m_bacf)(channelData[i]);
-        updateFrequency();
+        auto isReady = (*m_bacf)(channelData[i]);
+        auto isReady2 = (*m_bacf2)(channelData[i]);
+
+        if (isReady && isReady2)
+        {
+            if (m_bacf->periodicity() > 0.8 && m_bacf2->periodicity() > 0.8)
+            {
+                updateFrequency((m_bacf->get_frequency() + m_bacf2->get_frequency()) * 0.5);
+            }
+
+            else
+            {
+                m_bacf->reset();
+                m_bacf2->reset();
+                updateFrequency(-1);
+            }
+        }
+
+        else
+        {
+            updateFrequency((m_bacf->predict_frequency() + m_bacf2->predict_frequency()) * 0.5);
+        }
     }
 }
 
@@ -42,9 +64,9 @@ float FrequencyEstimator::getFrequency()
     return m_frequency.load();
 }
 
-void FrequencyEstimator::updateFrequency()
+void FrequencyEstimator::updateFrequency(float frequency)
 {
-    m_frequency = m_bacf->get_frequency();
+    m_frequency = frequency;
     
     if (m_frequency == 0.f)
     {

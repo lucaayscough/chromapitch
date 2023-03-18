@@ -14,11 +14,12 @@ public:
     
 private:
     float getFrequency();
-    void updateFrequency();
+    void updateFrequency(float frequency);
     void updateNote();
 
 private:
     std::shared_ptr<cycfi::q::pitch_detector> m_bacf;
+    std::shared_ptr<cycfi::q::pitch_detector> m_bacf2;
     chroma::NoteInfo m_note;
     std::atomic<float> m_frequency;
 

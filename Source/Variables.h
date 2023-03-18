@@ -7,8 +7,8 @@ struct Variables
     static const int incrementFactor = 2;
     static const int windowWidth = 800;
     static const int windowHeight = 600;
-    static const int minimumFrequency = 80;
-    static const int maximumFrequency = 2500;
+    static const int minimumFrequency = 82;
+    static const int maximumFrequency = 1312;
     static constexpr float rmsThreshold = 0.001f;
     
     static const int lowerKeyBound = 21;
