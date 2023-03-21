@@ -40,8 +40,6 @@ void MPE::processBlock(juce::MidiBuffer& midiMessages, chroma::NoteInfo& note)
     else if (m_isNoteOn)
     {
         auto pitchBend = chroma::Midi::getPitchBendMessage(m_lastNote, note);    
-        
-        pitchBend.setChannel(2);
         midiMessages.addEvent(pitchBend, 0);
     }
 }

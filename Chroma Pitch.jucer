@@ -3,8 +3,7 @@
 <JUCERPROJECT id="DxrrVp" name="Chroma Pitch" projectType="audioplug" useAppConfig="0"
               addUsingNamespaceToJuceHeader="0" displaySplashScreen="1" jucerFormatVersion="1"
               companyWebsite="lucaayscough.com" pluginName="Chroma Pitch" pluginDesc="Pitch detection plugin."
-              pluginManufacturer="Chroma" pluginCharacteristicsValue="pluginProducesMidiOut,pluginWantsMidiIn"
-              headerPath="/Users/lucaayscough/dev/Chroma/Dependencies/eigen">
+              pluginManufacturer="Chroma" pluginCharacteristicsValue="pluginProducesMidiOut,pluginWantsMidiIn">
   <MAINGROUP id="C8k5RR" name="Chroma Pitch">
     <GROUP id="{A2A1EDFB-4B96-DCC5-B971-F8C78EF2394D}" name="Source">
       <FILE id="WDA7eb" name="FrequencyEstimator.cpp" compile="1" resource="0"

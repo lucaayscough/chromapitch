@@ -58,16 +58,14 @@ namespace chroma
 
         static juce::MidiMessage getNoteOnMessage(chroma::NoteInfo& note)
         {
-            juce::MidiMessage noteOn(0x90, note.note, 100);
-            noteOn.setChannel(2);
+            juce::MidiMessage noteOn(0x91, note.note, 100);
 
             return noteOn;
         }
 
         static juce::MidiMessage getNoteOffMessage(chroma::NoteInfo& note)
         {
-            juce::MidiMessage noteOff(0x80, note.note, 100);
-            noteOff.setChannel(2);
+            juce::MidiMessage noteOff(0x81, note.note, 100);
 
             return noteOff;
         }            
@@ -79,8 +77,7 @@ namespace chroma
             int msb = (pitchBendVal >> 7) & 0x7F;
             int lsb = pitchBendVal & 0x7F;
 
-            juce::MidiMessage pitchBend(0xE0, lsb, msb);
-            pitchBend.setChannel(2);
+            juce::MidiMessage pitchBend(0xE1, lsb, msb);
 
             return pitchBend;
         }
