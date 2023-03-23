@@ -110,8 +110,10 @@ bool ChromaPitchAudioProcessor::isBusesLayoutSupported (const BusesLayout& layou
 void ChromaPitchAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midiMessages)
 {
     juce::ScopedNoDenormals noDenormals;
+
+    juce::AudioBuffer<float> bufferCopy(buffer);
     
-    m_frequencyEstimator.processBlock(buffer);
+    m_frequencyEstimator.processBlock(bufferCopy);
  
     if (Variables::outputMidi)
     {

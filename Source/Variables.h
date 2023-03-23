@@ -10,6 +10,7 @@ struct Variables
     static const int minimumFrequency = 82;
     static const int maximumFrequency = 1312;
     static constexpr float rmsThreshold = 0.001f;
+    static const int numFilters = 32;
     
     static const int lowerKeyBound = 21;
     static const int higherKeyBound = 109;

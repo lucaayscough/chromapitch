@@ -18,14 +18,43 @@ void FrequencyEstimator::prepareToPlay(double sampleRate, float lowestFrequency,
     
     m_bacf = std::make_shared<cycfi::q::pitch_detector>(lowest_freq, highest_freq, sampleRate, hysteresis);
     m_bacf2 = std::make_shared<cycfi::q::pitch_detector>(lowest_freq, highest_freq, sampleRate, hysteresis);
+
+    m_filters.clear();
+    
+    for (int filter = 0; filter < Variables::numFilters; ++filter)
+    {
+        m_filters.add (new juce::IIRFilter);
+        m_filters[filter]->reset();
+
+        if (filter < Variables::numFilters / 2)
+        {
+            m_filters[filter]->setCoefficients(juce::IIRCoefficients::makeHighPass(sampleRate, lowestFrequency));
+        }
+
+        else
+        {
+            m_filters[filter]->setCoefficients(juce::IIRCoefficients::makeLowPass(sampleRate, highestFrequency));
+        }
+    }
+}
+
+void FrequencyEstimator::preprocess(juce::AudioBuffer<float>& buffer)
+{
+    auto* channelData = buffer.getWritePointer(0);
+    
+    for (int filter = 0; filter < Variables::numFilters; ++filter)
+    {
+        m_filters[filter]->processSamples(channelData, buffer.getNumSamples());   
+    }
 }
 
 void FrequencyEstimator::processBlock(juce::AudioBuffer<float>& buffer)
 {
+    preprocess(buffer);
+
     if (buffer.getRMSLevel(0, 0, buffer.getNumSamples()) < Variables::rmsThreshold)
     {
         m_bacf->reset();
-        m_bacf2->reset();
         updateFrequency(-1);
         return;
     }
@@ -35,27 +64,23 @@ void FrequencyEstimator::processBlock(juce::AudioBuffer<float>& buffer)
     for (int i = 0; i < buffer.getNumSamples(); ++i)
     {
         auto isReady = (*m_bacf)(channelData[i]);
-        auto isReady2 = (*m_bacf2)(channelData[i] * -1);
+        auto frequency = m_bacf->predict_frequency();
 
-        if (isReady && isReady2)
+        if (isReady)
         {
-            if (m_bacf->periodicity() > 0.8 && m_bacf2->periodicity() > 0.8)
+            if (m_bacf->periodicity() > 0.9)
             {
-                updateFrequency((m_bacf->get_frequency() + m_bacf2->get_frequency()) * 0.5);
+                frequency = m_bacf->get_frequency();
+                DBG("detected");
             }
 
             else
             {
-                m_bacf->reset();
-                m_bacf2->reset();
-                updateFrequency(-1);
+                frequency = -1;
             }
         }
 
-        else
-        {
-            updateFrequency((m_bacf->predict_frequency() + m_bacf2->predict_frequency()) * 0.5);
-        }
+        updateFrequency(frequency);
     }
 }
 
