@@ -7,6 +7,8 @@
               pluginFormats="buildAU,buildStandalone,buildVST3">
   <MAINGROUP id="C8k5RR" name="Chroma Pitch">
     <GROUP id="{A2A1EDFB-4B96-DCC5-B971-F8C78EF2394D}" name="Source">
+      <FILE id="bDyP1d" name="Header.cpp" compile="1" resource="0" file="Source/Header.cpp"/>
+      <FILE id="g45F57" name="Header.h" compile="0" resource="0" file="Source/Header.h"/>
       <FILE id="WDA7eb" name="FrequencyEstimator.cpp" compile="1" resource="0"
             file="Source/FrequencyEstimator.cpp"/>
       <FILE id="hplsUO" name="FrequencyEstimator.h" compile="0" resource="0"

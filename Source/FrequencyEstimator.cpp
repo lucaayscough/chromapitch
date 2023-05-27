@@ -71,7 +71,6 @@ void FrequencyEstimator::processBlock(juce::AudioBuffer<float>& buffer)
             if (m_bacf->periodicity() > 0.9)
             {
                 frequency = m_bacf->get_frequency();
-                DBG("detected");
             }
 
             else

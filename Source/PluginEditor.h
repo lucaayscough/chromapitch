@@ -20,6 +20,7 @@ public:
 private:
     ChromaPitchAudioProcessor& audioProcessor;
 
+    Header m_header;
     View m_view;
     PitchLine m_pitchLine;
 

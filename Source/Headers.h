@@ -13,6 +13,7 @@
 #include "PitchLine.h"
 #include "NoteBox.h"
 #include "View.h"
+#include "Header.h"
 
 #include "PluginProcessor.h"
 #include "PluginEditor.h"

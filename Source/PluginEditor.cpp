@@ -9,8 +9,11 @@ ChromaPitchAudioProcessorEditor::ChromaPitchAudioProcessorEditor (ChromaPitchAud
 
     startTimerHz(60);
 
+    addAndMakeVisible(m_header);
     addAndMakeVisible(m_view);
     addAndMakeVisible(m_pitchLine);
+
+    m_header.setAlwaysOnTop(true);
 }
 
 ChromaPitchAudioProcessorEditor::~ChromaPitchAudioProcessorEditor() {}
@@ -19,8 +22,7 @@ void ChromaPitchAudioProcessorEditor::paint(juce::Graphics& g) {}
 
 void ChromaPitchAudioProcessorEditor::resized()
 {
-    m_view.setBounds(0, m_scrollPosY, getWidth(), Variables::numBoxes * m_noteBoxHeight);
-    m_pitchLine.setBounds(0, m_scrollPosY, getWidth(), Variables::numBoxes * m_noteBoxHeight);  
+    updateBounds(); 
 }
 
 void ChromaPitchAudioProcessorEditor::timerCallback()
@@ -79,9 +81,11 @@ void ChromaPitchAudioProcessorEditor::mouseMagnify(const juce::MouseEvent& event
 
 void ChromaPitchAudioProcessorEditor::updateBounds()
 {
+    m_header.setBounds(0, 0, getWidth(), Variables::headerHeight);
     m_view.setBounds(0, m_scrollPosY, getWidth(), Variables::numBoxes * m_noteBoxHeight);
     m_pitchLine.setBounds(0, m_scrollPosY, getWidth(), Variables::numBoxes * m_noteBoxHeight);  
-    
+
+    m_header.repaint(); 
     m_view.repaint();
     m_pitchLine.repaint();
 }
