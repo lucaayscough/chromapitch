@@ -13,7 +13,32 @@ View::View()
 
 View::~View() {}
 
-void View::paint(juce::Graphics& g) {}
+void View::update(chroma::NoteInfo& note)
+{
+    for (int i = 0; i < Variables::numBoxes; ++i)    
+    {
+        int index = Variables::numBoxes - i + Variables::lowerKeyBound - 1;
+        
+        if (note.note == index)
+        {
+            m_noteBoxes[i]->turnOn();
+            float gradientPos = (note.cents + 50) / 100.f; 
+            m_noteBoxes[i]->setGradientPos(gradientPos);
+        }
+        
+        else
+        {
+            m_noteBoxes[i]->turnOff();
+        }
+        
+        m_noteBoxes[i]->update();
+    }
+}
+
+void View::paint(juce::Graphics& g)
+{
+    g.fillAll(Variables::black);
+}
 
 void View::resized()
 {

@@ -1,11 +1,7 @@
 #include "Headers.h"
 
 
-PitchLine::PitchLine()
-{
-    m_gradient.addColour(0.0, juce::Colours::green);
-    m_gradient.addColour(1.0, juce::Colours::red);
-}
+PitchLine::PitchLine() {}
 
 PitchLine::~PitchLine() {}
 
@@ -69,11 +65,7 @@ void PitchLine::update(chroma::NoteInfo& note)
 
 void PitchLine::paint(juce::Graphics& g)
 {
-    double cents = std::abs(m_note.cents);
-    double pos = cents / 50.0;
-
-    g.setColour(m_gradient.getColourAtPosition(pos));
-    //g.setColour(Variables::pitchLineColour);
+    g.setColour(Variables::white);
     g.strokePath(m_path, juce::PathStrokeType(3, juce::PathStrokeType::beveled, juce::PathStrokeType::rounded));
 }
 

@@ -27,6 +27,7 @@ void ChromaPitchAudioProcessorEditor::timerCallback()
 {
     auto note = audioProcessor.getLastNote();
     
+    m_view.update(note);
     m_pitchLine.update(note);
  
     if (m_pitchLine.getCurrentY() < -m_pitchLine.getY() && m_pitchLine.getCurrentY() != -1)

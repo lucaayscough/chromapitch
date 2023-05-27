@@ -7,6 +7,7 @@ public:
     View();
     ~View();
     
+    void update(chroma::NoteInfo& note);
     void paint(juce::Graphics& g) override;
     void resized() override; 
 
