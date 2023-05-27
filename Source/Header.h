@@ -11,5 +11,6 @@ public:
     void resized() override;
 
 private:
+    juce::ImageComponent m_Logo;
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(Header)
 };

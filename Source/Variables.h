@@ -11,7 +11,7 @@ struct Variables
 
     // MAIN WINDOW
     static const int windowWidth = 1000;
-    static const int windowHeight = 600;
+    static const int windowHeight = 800;
 
     // PRE-PROCESSING
     static const int minimumFrequency = 82;
