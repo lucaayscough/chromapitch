@@ -3,7 +3,7 @@
 
 struct Variables
 {
-    static const bool outputMidi = true;
+    static const bool outputMidi = false;
     static const int incrementFactor = 2;
     static const int windowWidth = 800;
     static const int windowHeight = 600;
@@ -17,10 +17,12 @@ struct Variables
     static const int numBoxes = higherKeyBound - lowerKeyBound; 
     static const int noteBoxHeight = 40;
     
-    static const juce::Colour backgroundColour;
-    static const juce::Colour boundingBoxColour;
-    static const juce::Colour pitchLineColour; 
-    static const juce::Colour textColour;
+    static const juce::Colour black;
+    static const juce::Colour green;
+    static const juce::Colour white; 
+    static const juce::Colour red;
+    static const juce::Colour blue;
+    static const juce::Colour lavender;
     static const int distanceThreshold = 20;
 };
 
