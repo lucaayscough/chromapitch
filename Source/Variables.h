@@ -20,7 +20,8 @@ struct Variables
     static const int numFilters = 32;
     
     // GUI
-    static const int headerHeight = 60;
+    static const int headerHeight = 50;
+    static const int headerTrim = 10;
     static const int lowerKeyBound = 21;
     static const int higherKeyBound = 109;
     static const int numBoxes = higherKeyBound - lowerKeyBound; 

@@ -18,7 +18,10 @@ ChromaPitchAudioProcessorEditor::ChromaPitchAudioProcessorEditor (ChromaPitchAud
 
 ChromaPitchAudioProcessorEditor::~ChromaPitchAudioProcessorEditor() {}
 
-void ChromaPitchAudioProcessorEditor::paint(juce::Graphics& g) {}
+void ChromaPitchAudioProcessorEditor::paint(juce::Graphics& g)
+{
+    g.fillAll(Variables::blue);
+}
 
 void ChromaPitchAudioProcessorEditor::resized()
 {
