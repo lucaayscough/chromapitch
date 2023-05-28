@@ -67,17 +67,24 @@ void ChromaPitchAudioProcessorEditor::mouseWheelMove(const juce::MouseEvent& eve
 
 void ChromaPitchAudioProcessorEditor::mouseMagnify(const juce::MouseEvent& event, float scaleFactor)
 {
+    auto y = event.getMouseDownY();
+    y += -m_scrollPosY;
+    
+    float numBoxes = y / m_noteBoxHeight;
+
     if (scaleFactor > 1.0f && m_noteBoxHeight < 60.0f)
     {
-        m_noteBoxHeight += 1.0f;
-        m_scrollPosY -= Variables::numBoxes;
+        m_noteBoxHeight += 0.1f;
+        m_scrollPosY -= numBoxes * 0.1f;
     }
     
     else if (scaleFactor < 1.0f && m_noteBoxHeight > 20.0f)
     {
-        m_noteBoxHeight -= 1.0f;
-        m_scrollPosY += Variables::numBoxes;
+        m_noteBoxHeight -= 0.1f;
+        m_scrollPosY += numBoxes * 0.1f;
     }
+    
+    DBG(numBoxes);
 
     updateBounds();
 }
