@@ -4,7 +4,7 @@
 struct Variables
 {
     // MIDI
-    static const bool outputMidi = false;
+    static const bool outputMidi = true;
 
     //
     static const int incrementFactor = 2;
@@ -35,7 +35,8 @@ struct Variables
     static const juce::Colour red;
     static const juce::Colour blue;
     static const juce::Colour lavender;
-    static constexpr float gradientAlphaUpdateRate = 0.05f;
+    static constexpr float gradientAlphaUpdateRateStart = 0.05f;
+    static constexpr float gradientAlphaUpdateRateEnd = 0.1f;
     static constexpr float gradientPosUpdateRate = 0.01f;
 };
 

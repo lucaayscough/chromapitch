@@ -84,8 +84,6 @@ void ChromaPitchAudioProcessorEditor::mouseMagnify(const juce::MouseEvent& event
         m_scrollPosY += numBoxes * 0.1f;
     }
     
-    DBG(numBoxes);
-
     updateBounds();
 }
 

@@ -47,12 +47,12 @@ void NoteBox::update()
 {
     if (m_isOn)
     {
-        m_alpha += Variables::gradientAlphaUpdateRate;
+        m_alpha += Variables::gradientAlphaUpdateRateStart;
     }
 
     if (!m_isOn && m_alpha > 0.f)
     {
-        m_alpha -= Variables::gradientAlphaUpdateRate;
+        m_alpha -= Variables::gradientAlphaUpdateRateEnd;
     }
 
     if (m_alpha < 0.f)
