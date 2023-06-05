@@ -26,7 +26,7 @@ struct Variables
     static const int higherKeyBound = 109;
     static const int numBoxes = higherKeyBound - lowerKeyBound; 
     static const int noteBoxHeight = 40;
-    static const int distanceThreshold = 20;
+    static const int distanceThreshold = 50;
     
     // COLOURS
     static const juce::Colour black;
