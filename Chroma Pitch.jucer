@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <JUCERPROJECT id="DxrrVp" name="Chroma Pitch" projectType="audioplug" useAppConfig="0"
-              addUsingNamespaceToJuceHeader="0" displaySplashScreen="1" jucerFormatVersion="1"
-              companyWebsite="lucaayscough.com" pluginName="Chroma Pitch" pluginDesc="Pitch detection plugin."
-              pluginManufacturer="Chroma" pluginCharacteristicsValue="pluginProducesMidiOut,pluginWantsMidiIn"
-              pluginFormats="buildAU,buildStandalone,buildVST3">
+              addUsingNamespaceToJuceHeader="0" displaySplashScreen="0" jucerFormatVersion="1"
+              companyWebsite="chromaaudio.gumroad.com" pluginName="Chroma Pitch"
+              pluginDesc="Pitch detection and conversion to MIDI." pluginManufacturer="Chroma Audio"
+              pluginCharacteristicsValue="pluginProducesMidiOut,pluginWantsMidiIn"
+              pluginFormats="buildAU,buildStandalone,buildVST3" bundleIdentifier="com.chromaaudio.chromapitch"
+              aaxIdentifier="com.chromaaudio.chromapitch" version="0.1.1" companyName="Chroma Audio">
   <MAINGROUP id="C8k5RR" name="Chroma Pitch">
+    <GROUP id="{A5604DE0-D5AF-52AA-2AFE-C5CABCA20EC7}" name="Assets">
+      <FILE id="AAb1Es" name="logo.png" compile="0" resource="1" file="Assets/logo.png"/>
+    </GROUP>
     <GROUP id="{A2A1EDFB-4B96-DCC5-B971-F8C78EF2394D}" name="Source">
       <FILE id="bDyP1d" name="Header.cpp" compile="1" resource="0" file="Source/Header.cpp"/>
       <FILE id="g45F57" name="Header.h" compile="0" resource="0" file="Source/Header.h"/>

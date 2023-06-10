@@ -3,9 +3,8 @@
 
 Header::Header()
 {
-    juce::File img("/Users/lucaayscough/Work/Chroma Audio/Chroma Pitch/logo.png");
-    juce::Image imgFromFile = juce::ImageFileFormat::loadFrom(img);
-    m_Logo.setImage(imgFromFile, juce::RectanglePlacement::xMid);
+    juce::Image logo = juce::ImageCache::getFromMemory (BinaryData::logo_png, BinaryData::logo_pngSize);
+    m_Logo.setImage(logo, juce::RectanglePlacement::xMid);
     addAndMakeVisible(m_Logo);
 }
 Header::~Header() {}
