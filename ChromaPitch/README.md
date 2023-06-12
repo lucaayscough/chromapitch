@@ -3,18 +3,14 @@
 Chroma Pitch is a beautiful pitch detection audio plugin which doesn't really have anything too special about it other than it is in fact going to be very beautiful.
 
 
-## Methods implemented thus far:
+## Implemented methods:
 
-<ul>
-    <li>Zero-Crossing;</li>
-    <li>YIN;</li>
-</ul>   
+ - Yin
+ - BACF
 
 
 ## Dependencies
 
-<ul>
-    <li>JUCE;</li>
-    <li>Eigen;</li>
-</ul>
-            
+ - [JUCE](https://juce.com)
+ - [cycfi/q](https://github.com/cycfi/q) 
+ - [cycfi/infra](https://github.com/cycfi/infra/)
