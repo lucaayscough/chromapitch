@@ -1,6 +1,6 @@
-Builds/
-JuceLibraryCode/
+.vscode
+
+ChromaPitch/Builds
+ChromaPitch/JuceLibraryCode
+
 .DS_Store
-.gitignore
-Dependencies/
-.vscode/

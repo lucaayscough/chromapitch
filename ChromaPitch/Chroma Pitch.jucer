@@ -6,7 +6,8 @@
               pluginDesc="Pitch detection and conversion to MIDI." pluginManufacturer="Chroma Audio"
               pluginCharacteristicsValue="pluginProducesMidiOut,pluginWantsMidiIn"
               pluginFormats="buildAU,buildStandalone,buildVST3" bundleIdentifier="com.chromaaudio.chromapitch"
-              aaxIdentifier="com.chromaaudio.chromapitch" version="0.1.1" companyName="Chroma Audio">
+              aaxIdentifier="com.chromaaudio.chromapitch" version="0.1.1" companyName="Chroma Audio"
+              companyCopyright="MIT license." companyEmail="lucaayscough@gmail.com">
   <MAINGROUP id="C8k5RR" name="Chroma Pitch">
     <GROUP id="{A5604DE0-D5AF-52AA-2AFE-C5CABCA20EC7}" name="Assets">
       <FILE id="AAb1Es" name="logo.png" compile="0" resource="1" file="Assets/logo.png"/>
