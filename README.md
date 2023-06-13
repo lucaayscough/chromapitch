@@ -4,9 +4,7 @@ Chroma Audio main repository.
 
 Here you can find the code to Chroma Pitch.
 
-## To Build
-
-To build on Mac OS:
+## To build on Mac OS:
 
 Open terminal and install cmake:
 
