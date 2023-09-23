@@ -2,9 +2,24 @@
 #include "Chroma/RingBuffer.h"
 
 
-TEST(RingBufferTest, DefaultConstructor)
+TEST(RingBufferTest, Test001)
 {
-    Chroma::RingBuffer<int> buffer(5);
-    ASSERT_EQ(buffer.maxSize(), 5);
+    std::size_t capacity = 512;
+
+    Chroma::RingBuffer<int> buffer(capacity);
+
+    ASSERT_EQ(buffer.maxSize(), capacity);
     ASSERT_TRUE(buffer.isEmpty());
+
+    for (int i = 0; i < 100000; ++i)
+    {
+        buffer.push(5); 
+    }
+
+    for (int i = 0; i < 100; ++i)
+    {
+        buffer.pop();
+    }
+
+    ASSERT_FALSE(buffer.isEmpty());
 }

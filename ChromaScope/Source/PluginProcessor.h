@@ -41,6 +41,8 @@ public:
     void getStateInformation (juce::MemoryBlock& destData) override;
     void setStateInformation (const void* data, int sizeInBytes) override;
 
+    ScopeProcessor& getScopeProcessor();
+
 private:
     //==============================================================================
     ScopeProcessor m_scopeProcessor;

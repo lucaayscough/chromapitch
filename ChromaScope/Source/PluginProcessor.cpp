@@ -171,3 +171,8 @@ juce::AudioProcessor* JUCE_CALLTYPE createPluginFilter()
 {
     return new AudioPluginAudioProcessor();
 }
+
+ScopeProcessor& AudioPluginAudioProcessor::getScopeProcessor()
+{
+    return m_scopeProcessor;
+}

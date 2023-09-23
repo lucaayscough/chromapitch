@@ -2,7 +2,7 @@
 
 #include <JuceHeader.h>
 
-#include "Chroma/RingBuffer.h"
+#include "Chroma/ChromaHeader.h"
 
 #include "ScopeProcessor.h"
 #include "PluginProcessor.h"
