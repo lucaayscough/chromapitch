@@ -11,30 +11,77 @@ namespace Chroma
         std::size_t count;
         std::size_t head;
         std::size_t tail;
-
-       int m_writeIndex = 0;
-       int m_readIndex = 0;
-       int m_size = 0;
-       T* m_buffer;
+        T* buffer;
 
     public:
-        RingBuffer (int _size) : m_size (_size)
+        RingBuffer (std::size_t _capacity) : capacity (_capacity), count (0), head (0), tail (0)
         {
-            m_buffer = new T[m_size];
+            buffer = new T[capacity];
         }
 
         ~RingBuffer()
         {
-            delete[] m_buffer;
+            delete[] buffer;
         }
 
-        void push (T _value)
+        void push (T item)
         {
+            buffer[head] = item;
+            moveHead();
+            
+            if (count < capacity)
+            {
+                ++count;
+            }
+
+            else 
+            {
+                moveTail();
+            }
         }
 
         T pop()
         {
-            
+            if (isEmpty())
+            {
+                throw std::runtime_error("Buffer is empty");
+            }
+
+            T item = buffer[tail];
+            moveTail();
+            --count;
+            return item;
+        }
+
+        bool isEmpty()
+        {
+            return count == 0;
+        }
+
+        bool isFull() 
+        {
+            return count == capacity;
+        }
+
+        std::size_t size()
+        {
+            return count;
+        }
+
+        std::size_t maxSize()
+        {
+            return capacity;
+        }
+
+    private:
+        void moveHead()
+        {
+            head = (head + 1) % capacity;
+        }
+
+        void moveTail()
+        {
+            tail = (tail + 1) % capacity;
         }
     };
 }
