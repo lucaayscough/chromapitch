@@ -7,7 +7,7 @@ set(Q_DIR "${CMAKE_BINARY_DIR}/dependencies/q")
 set(INFRA_DIR "${CMAKE_BINARY_DIR}/dependencies/infra")
 
 
-# Install JUCE framework.
+# Install JUCE framework
 
 if(NOT EXISTS ${JUCE_DIR})
     execute_process(
@@ -59,3 +59,4 @@ include_directories("${Q_DIR}/q_lib/include/")
 include_directories("chromalib/include")
 
 add_subdirectory(ChromaPitch)
+add_subdirectory(ChromaScope)
