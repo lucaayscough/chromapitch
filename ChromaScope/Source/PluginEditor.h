@@ -11,7 +11,7 @@ public:
     void resized() override;
 
 private:
-    void timerCallback();
+    void timerCallback() override;
 
 private:
     AudioPluginAudioProcessor& processorRef;

@@ -17,5 +17,6 @@ private:
     int m_scopeRate = 60;
     int m_numSamples;
     int m_head = 0;
+    const std::size_t m_bufferSize = 512;
     Chroma::RingBuffer<Chroma::Point> m_ringBuffer;
 };

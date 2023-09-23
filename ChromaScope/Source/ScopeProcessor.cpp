@@ -1,7 +1,7 @@
 #include "Headers.h"
 
 
-ScopeProcessor::ScopeProcessor() : m_ringBuffer (512)
+ScopeProcessor::ScopeProcessor() : m_ringBuffer (m_bufferSize)
 {
 }
 
@@ -15,14 +15,22 @@ void ScopeProcessor::prepareToPlay (float _sampleRate)
 
 void ScopeProcessor::processBlock (juce::AudioBuffer<float> _buffer)
 {
-    auto* ch1 = _buffer.getWritePointer (0);
-    auto* ch2 = _buffer.getWritePointer (1);
+    if (_buffer.getNumChannels() < 2)
+    {
+        throw std::runtime_error("Channel configuration needs to be stereo.");
+    }
 
-    Chroma::Point point;      
-    point.x = ch1[0];
-    point.y = ch2[0];
-    
-    m_ringBuffer.push (point);
+    for (int i = 0; i < _buffer.getNumSamples(); ++i)
+    {
+        auto* ch1 = _buffer.getReadPointer(0);
+        auto* ch2 = _buffer.getReadPointer (1);
+
+        Chroma::Point point;      
+        point.x = ch1[i];
+        point.y = ch2[i];
+        
+        m_ringBuffer.push (point);
+    }
 }
 
 Chroma::RingBuffer<Chroma::Point>& ScopeProcessor::getRingBuffer()

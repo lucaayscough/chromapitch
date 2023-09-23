@@ -83,5 +83,12 @@ namespace Chroma
         {
             tail = (tail + 1) % capacity;
         }
+        
+    public:
+        class Iterator
+        {
+        public:
+            
+        }
     };
 }
