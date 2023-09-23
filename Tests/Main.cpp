@@ -1,9 +1,10 @@
-#include <iostream>
+#include <gtest/gtest.h>
 #include "Chroma/RingBuffer.h"
 
 
-int main()
+TEST(RingBufferTest, DefaultConstructor)
 {
-    
-    return 0;
+    Chroma::RingBuffer<int> buffer(5);
+    ASSERT_EQ(buffer.maxSize(), 5);
+    ASSERT_TRUE(buffer.isEmpty());
 }
