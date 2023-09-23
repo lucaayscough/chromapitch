@@ -60,3 +60,4 @@ include_directories("chromalib/include")
 
 add_subdirectory(ChromaPitch)
 add_subdirectory(ChromaScope)
+add_subdirectory(Tests)
