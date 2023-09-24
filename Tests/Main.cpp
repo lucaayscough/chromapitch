@@ -1,35 +1,63 @@
 #include <gtest/gtest.h>
 #include "Chroma/RingBuffer.h"
+#include <ctime>
 
 
-TEST(RingBufferTest, PushAndPop)
+std::size_t capacity = 16;
+
+
+TEST(RingBufferTest, Constructor)
 {
-    std::size_t capacity = 512;
-
     Chroma::RingBuffer<int> buffer (capacity);
-
-    ASSERT_EQ(buffer.maxSize(), capacity);
-    ASSERT_TRUE(buffer.isEmpty());
-
-    for (int i = 0; i < 100000; ++i)
-    {
-        buffer.push (5); 
-    }
-
-    ASSERT_FALSE(buffer.isEmpty());
-
-    for (int i = 0; i < buffer.maxSize(); ++i) 
-    {
-        buffer.pop();
-    }
-
-    ASSERT_TRUE(buffer.isEmpty());
 }
 
+TEST(RingBufferTest, put)
+{
+    Chroma::RingBuffer<int> buffer (capacity);
+
+    for (std::size_t i = 0; i < capacity; ++i)
+    {
+        ASSERT_TRUE (buffer.put(0));
+    }
+
+    for (std::size_t i = 0; i < capacity; ++i)
+    {
+        ASSERT_FALSE (buffer.put(9));
+        ASSERT_TRUE (buffer.isFull());
+        ASSERT_FALSE (buffer.isEmpty());
+    }
+
+    ASSERT_EQ (buffer.getSize(), capacity);
+}
+
+TEST(RingBufferTest, push)
+{
+    Chroma::RingBuffer<int> buffer (capacity);
+
+    for (std::size_t i = 0; i < capacity; ++i)
+    {
+        buffer.push(0);
+    }
+
+    ASSERT_TRUE (buffer.isFull());
+    ASSERT_FALSE (buffer.isEmpty());
+
+    ASSERT_EQ (buffer.getSize(), capacity);
+
+
+    for (std::size_t i = 0; i < capacity; ++i)
+    {
+        buffer.push(0);
+    }
+
+    ASSERT_TRUE (buffer.isFull());
+    ASSERT_FALSE (buffer.isEmpty());
+
+    ASSERT_EQ (buffer.getSize(), capacity);
+}
 
 TEST(RingBufferTest, Iterator)
 {
-    std::size_t capacity = 512;
 
     Chroma::RingBuffer<int> buffer (capacity);
 
@@ -40,16 +68,14 @@ TEST(RingBufferTest, Iterator)
 
     std::size_t num = 0;
 
-    std::cout << "Begin index: " << buffer.begin().getIndex() << std::endl;
-    std::cout << "End index: " << buffer.end().getIndex() << std::endl;
-    
    
     for (auto val : buffer)
     {
         ++num;
+        std::cout << val << std::endl;
     }
 
     ASSERT_FALSE (buffer.isEmpty());
 
-    ASSERT_EQ (buffer.size(), num);
+    ASSERT_EQ (buffer.getSize(), num);
 }

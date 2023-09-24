@@ -7,12 +7,15 @@ namespace Chroma
     class RingBuffer
     {
     private:
-        std::size_t capacity, count, head, tail;
         T* buffer;
+        std::size_t capacity, count, head, tail;
+        bool full;
 
     public:
-        RingBuffer (std::size_t _capacity) : capacity (_capacity), count (0), head (0), tail (0)
+        RingBuffer(std::size_t _capacity)
+            : capacity (_capacity), count (0), head (0), tail (0), full (false)
         {
+            assert (capacity > 1);
             buffer = new T[capacity];
         }
 
@@ -21,72 +24,76 @@ namespace Chroma
             delete[] buffer;
         }
 
-        void push (T item)
+        void reset()
         {
-            buffer[head] = item;
-            moveHead();
-            
-            if (count < capacity)
+        }
+
+        bool put(T val)
+        {
+            if (full)
+            {
+                return false;
+            }
+
+            else
+            {
+                head = (head + 1) % capacity;
+                buffer[head] = val; 
+                ++count;
+                full = head == tail;
+                return true;
+            }
+        }
+
+        void push(T val)
+        {
+            head = (head + 1) % capacity;
+            buffer[head] = val;
+
+            if (full)
+            {
+                tail = (tail + 1) % capacity;
+            }
+
+            else
             {
                 ++count;
             }
-
-            else 
-            {
-                moveTail();
-            }
+            
+            full = (head == tail) && (count == capacity);
         }
 
         T pop()
         {
-            if (isEmpty())
-            {
-                throw std::runtime_error("Buffer is empty");
-            }
-
-            T item = buffer[tail];
-            moveTail();
-            --count;
-            return item;
         }
 
         bool isEmpty()
         {
-            return count == 0;
+            return !full;
         }
 
-        bool isFull() 
+        bool isFull()
         {
-            return count == capacity;
+            return full;
         }
-
-        std::size_t size()
-        {
-            return count;
-        }
-
-        std::size_t maxSize()
+        
+        std::size_t getCapacity()
         {
             return capacity;
         }
 
-    private:
-        void moveHead()
+        std::size_t getSize()
         {
-            head = (head + 1) % capacity;
+            return count;
         }
 
-        void moveTail()
-        {
-            tail = (tail + 1) % capacity;
-        }
         
     public:
         class Iterator
         {
         public:
-            Iterator (T* _buffer, std::size_t _index, std::size_t _capacity)
-                : buffer(_buffer), index(_index), capacity(_capacity) {}
+            Iterator (T* _buffer, std::size_t _index, std::size_t _capacity, bool _full)
+                : buffer(_buffer), index(_index), capacity(_capacity), full (_full) {}
 
             T& operator*()
             {
@@ -101,7 +108,16 @@ namespace Chroma
 
             bool operator!=(const Iterator& other)
             {
-                return index != other.getIndex();
+                if (full)
+                {
+                    full = false;
+                    return true;
+                }
+                
+                else
+                {
+                    return index != other.getIndex();
+                }
             }
 
             std::size_t getIndex() const 
@@ -112,16 +128,17 @@ namespace Chroma
         private:
             T* buffer;
             std::size_t index, capacity;
+            bool full;
         };
 
         Iterator begin()
         {
-            return Iterator (buffer, tail, capacity);
+            return Iterator (buffer, tail, capacity, full);
         }
 
         Iterator end()
         {
-            return Iterator (buffer, head, capacity);
+            return Iterator (buffer, head, capacity, full);
         }
     };
 }
