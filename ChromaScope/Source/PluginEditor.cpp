@@ -17,10 +17,13 @@ void AudioPluginAudioProcessorEditor::paint (juce::Graphics& g)
     
     auto& scopeRef = processorRef.getScopeProcessor();
     auto& bufferRef = scopeRef.getRingBuffer();
-    auto point = bufferRef.pop();
 
-    g.setColour (juce::Colours::red);
-    g.fillEllipse (200 + (200 * point.x), 200 + (200 * point.y), 10, 10);
+    for (auto point : bufferRef)
+    {
+        g.setColour (juce::Colours::red);
+        g.fillEllipse (200 + (200 * point.x), 200 + (200 * point.y), 10, 10);
+    }
+
 }
 
 void AudioPluginAudioProcessorEditor::resized() {}

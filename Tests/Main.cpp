@@ -2,7 +2,7 @@
 #include "Chroma/RingBuffer.h"
 
 
-TEST(RingBufferTest, Test001)
+TEST(RingBufferTest, PushAndPop)
 {
     std::size_t capacity = 512;
 
@@ -16,10 +16,40 @@ TEST(RingBufferTest, Test001)
         buffer.push (5); 
     }
 
-    for (auto val : buffer)
+    ASSERT_FALSE(buffer.isEmpty());
+
+    for (int i = 0; i < buffer.maxSize(); ++i) 
     {
-        std::cout << val << std::endl;
+        buffer.pop();
     }
 
-    ASSERT_FALSE(buffer.isEmpty());
+    ASSERT_TRUE(buffer.isEmpty());
+}
+
+
+TEST(RingBufferTest, Iterator)
+{
+    std::size_t capacity = 512;
+
+    Chroma::RingBuffer<int> buffer (capacity);
+
+    for (int i = 0; i < 1000; ++i)
+    {
+        buffer.push (5); 
+    }
+
+    std::size_t num = 0;
+
+    std::cout << "Begin index: " << buffer.begin().getIndex() << std::endl;
+    std::cout << "End index: " << buffer.end().getIndex() << std::endl;
+    
+   
+    for (auto val : buffer)
+    {
+        ++num;
+    }
+
+    ASSERT_FALSE (buffer.isEmpty());
+
+    ASSERT_EQ (buffer.size(), num);
 }

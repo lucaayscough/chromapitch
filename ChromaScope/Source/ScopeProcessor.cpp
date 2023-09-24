@@ -22,14 +22,19 @@ void ScopeProcessor::processBlock (juce::AudioBuffer<float> _buffer)
 
     for (int i = 0; i < _buffer.getNumSamples(); ++i)
     {
-        auto* ch1 = _buffer.getReadPointer(0);
-        auto* ch2 = _buffer.getReadPointer (1);
+        if (m_head == 0)
+        {
+            auto* ch1 = _buffer.getReadPointer(0);
+            auto* ch2 = _buffer.getReadPointer (1);
 
-        Chroma::Point point;      
-        point.x = ch1[i];
-        point.y = ch2[i];
+            Chroma::Point point;      
+            point.x = ch1[i];
+            point.y = ch2[i];
+            
+            m_ringBuffer.push (point);
+        }
         
-        m_ringBuffer.push (point);
+        m_head = (m_head + 1) % m_numSamples;
     }
 }
 
