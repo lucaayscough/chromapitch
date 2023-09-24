@@ -7,7 +7,7 @@ namespace chroma
 {
     struct NoteInfo
     {
-        float frequency = -1;
+        double frequency = -1;
         int note = -1;
         int cents = -1;
     };
@@ -22,27 +22,27 @@ namespace chroma
 
         static int octavesFromA4(const double frequency) 
         {
-            return std::round(frequencyToEqualTemperament(frequency));
+            return static_cast<int> (std::round(frequencyToEqualTemperament(frequency)));
         }
         
         static int semitonesFromA4(const double frequency)
         {
-            return std::round(12 * frequencyToEqualTemperament(frequency));
+            return static_cast<int> (std::round(12 * frequencyToEqualTemperament(frequency)));
         }
 
         static int centsFromA4(const double frequency)
         {
-            return std::round(1200 * frequencyToEqualTemperament(frequency)); 
+            return static_cast<int> (std::round(1200 * frequencyToEqualTemperament(frequency))); 
         }
 
         static int frequencyToMidi(const double frequency)
         {
-            return semitonesFromA4(frequency) + 69; 
+            return static_cast<int> (semitonesFromA4(frequency) + 69); 
         }
         
         static int centsFromNearestNote(const double frequency)
         {
-            return centsFromA4(frequency) - 100 * semitonesFromA4(frequency); 
+            return static_cast<int> (centsFromA4(frequency) - 100 * semitonesFromA4(frequency)); 
         }
 
         static int distanceInCents(chroma::NoteInfo& note_a, chroma::NoteInfo& note_b)
@@ -55,7 +55,7 @@ namespace chroma
 
         static int getPitchBend(int distanceInCents)
         {
-            return 8192 + (static_cast<double> (distanceInCents) * 1.70666666);
+            return static_cast<int> (8192 + (static_cast<double> (distanceInCents) * 1.70666666));
         }
 
         static juce::MidiMessage getNoteOnMessage(chroma::NoteInfo& note)

@@ -8,7 +8,7 @@ ScopeProcessor::~ScopeProcessor() {}
 void ScopeProcessor::prepareToPlay (float _sampleRate) 
 {
     m_sampleRate = _sampleRate;
-    m_numSamples = m_sampleRate / m_captureRateHz;
+    m_numSamples = static_cast<int> (m_sampleRate) / m_captureRateHz;
 }
 
 void ScopeProcessor::processBlock (juce::AudioBuffer<float> _buffer)
