@@ -18,12 +18,17 @@ void AudioPluginAudioProcessorEditor::paint (juce::Graphics& g)
     auto& scopeRef = processorRef.getScopeProcessor();
     auto& bufferRef = scopeRef.getRingBuffer();
 
+    float a = 1.f;
+    float delta = 1.f / (float)bufferRef.getSize();
+
     for (auto point : bufferRef)
     {
-        g.setColour (juce::Colours::red);
-        g.fillEllipse (200 + (200 * point.x), 200 + (200 * point.y), 10, 10);
-    }
+    
+        a = a - delta;
 
+        g.setColour (juce::Colours::red.withAlpha(a));
+        g.fillEllipse (200 + (200 * point.x), 200 + (200 * point.y), 2, 2);
+    }
 }
 
 void AudioPluginAudioProcessorEditor::resized() {}
