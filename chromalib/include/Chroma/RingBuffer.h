@@ -28,7 +28,7 @@ namespace Chroma
         {
         }
 
-        bool put(T val)
+        bool put (T val)
         {
             if (full)
             {
@@ -93,7 +93,7 @@ namespace Chroma
         {
         public:
             Iterator (T* _buffer, std::size_t _index, std::size_t _capacity, bool _full)
-                : buffer(_buffer), index(_index), capacity(_capacity), full (_full) {}
+                : buffer (_buffer), index (_index), capacity (_capacity), full (_full) {}
 
             T& operator*()
             {
@@ -106,7 +106,7 @@ namespace Chroma
                 return *this;
             }
 
-            bool operator!=(const Iterator& other)
+            bool operator!= (const Iterator& other)
             {
                 if (full)
                 {

@@ -1,9 +1,7 @@
 #include "Headers.h"
 
 
-ScopeProcessor::ScopeProcessor() : m_ringBuffer (m_bufferSize)
-{
-}
+ScopeProcessor::ScopeProcessor() : m_ringBuffer (m_bufferSize) {}
 
 ScopeProcessor::~ScopeProcessor() {}
 
@@ -24,7 +22,7 @@ void ScopeProcessor::processBlock (juce::AudioBuffer<float> _buffer)
     {
         if (m_head == 0)
         {
-            auto* ch1 = _buffer.getReadPointer(0);
+            auto* ch1 = _buffer.getReadPointer (0);
             auto* ch2 = _buffer.getReadPointer (1);
 
             Chroma::Point point;      
