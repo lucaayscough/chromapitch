@@ -6,19 +6,19 @@ TEST(RingBufferTest, Test001)
 {
     std::size_t capacity = 512;
 
-    Chroma::RingBuffer<int> buffer(capacity);
+    Chroma::RingBuffer<int> buffer (capacity);
 
     ASSERT_EQ(buffer.maxSize(), capacity);
     ASSERT_TRUE(buffer.isEmpty());
 
     for (int i = 0; i < 100000; ++i)
     {
-        buffer.push(5); 
+        buffer.push (5); 
     }
 
-    for (int i = 0; i < 100; ++i)
+    for (auto val : buffer)
     {
-        buffer.pop();
+        std::cout << val << std::endl;
     }
 
     ASSERT_FALSE(buffer.isEmpty());

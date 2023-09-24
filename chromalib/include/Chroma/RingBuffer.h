@@ -7,10 +7,7 @@ namespace Chroma
     class RingBuffer
     {
     private:
-        std::size_t capacity;
-        std::size_t count;
-        std::size_t head;
-        std::size_t tail;
+        std::size_t capacity, count, head, tail;
         T* buffer;
 
     public:
@@ -88,7 +85,43 @@ namespace Chroma
         class Iterator
         {
         public:
+            Iterator (T* _buffer, std::size_t _index, std::size_t _capacity)
+                : buffer(_buffer), index(_index), capacity(_capacity) {}
+
+            T& operator*()
+            {
+                return buffer[index];
+            }
+
+            Iterator& operator++()
+            {
+                index = (index + 1) % capacity;
+                return *this;
+            }
+
+            bool operator!=(const Iterator& other)
+            {
+                return index != other.getIndex();
+            }
+
+            std::size_t getIndex() const 
+            {
+                return index;
+            }
             
+        private:
+            T* buffer;
+            std::size_t index, capacity;
+        };
+
+        Iterator begin()
+        {
+            return Iterator (buffer, tail, capacity);
+        }
+
+        Iterator end()
+        {
+            return Iterator (buffer, head, capacity);
         }
     };
 }
