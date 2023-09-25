@@ -12,11 +12,13 @@ namespace Chroma
         bool full;
 
     public:
-        RingBuffer(std::size_t _capacity)
-            : capacity (_capacity), count (0), head (0), tail (0), full (false)
+        RingBuffer(int _capacity)
+            : count (0), head (0), tail (0), full (false)
         {
-            assert (capacity > 1);
-            buffer = new T[capacity];
+            assert ((_capacity > 1) && "Capacity should be > 1.");
+
+            capacity = _capacity;
+            buffer = new T[static_cast<std::size_t> (capacity)];
         }
 
         ~RingBuffer()

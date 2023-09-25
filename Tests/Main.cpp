@@ -9,6 +9,10 @@ std::size_t capacity = 16;
 TEST(RingBufferTest, Constructor)
 {
     Chroma::RingBuffer<int> buffer (capacity);
+
+    ASSERT_DEATH (Chroma::RingBuffer<int> buffer_2 (-1), "Capacity should be > 1.");
+    ASSERT_DEATH (Chroma::RingBuffer<int> buffer_3 (0), "Capacity should be > 1.");
+    ASSERT_DEATH (Chroma::RingBuffer<int> buffer_4 (1), "Capacity should be > 1.");
 }
 
 TEST(RingBufferTest, put)
@@ -72,10 +76,8 @@ TEST(RingBufferTest, Iterator)
     for (auto val : buffer)
     {
         ++num;
-        std::cout << val << std::endl;
     }
 
     ASSERT_FALSE (buffer.isEmpty());
-
     ASSERT_EQ (buffer.getSize(), num);
 }
