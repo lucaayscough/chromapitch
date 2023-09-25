@@ -77,6 +77,10 @@ include_directories("${INFRA_DIR}/include/")
 include_directories("${Q_DIR}/q_lib/include/")
 include_directories("chromalib/include")
 
+add_definitions(-DDONT_SET_USING_JUCE_NAMESPACE)
+
 add_subdirectory(ChromaPitch)
 add_subdirectory(ChromaScope)
+add_subdirectory(Gravity)
 add_subdirectory(Tests)
+
