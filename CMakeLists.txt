@@ -82,5 +82,6 @@ add_definitions(-DDONT_SET_USING_JUCE_NAMESPACE)
 add_subdirectory(ChromaPitch)
 add_subdirectory(ChromaScope)
 add_subdirectory(Gravity)
+add_subdirectory(Vectors)
 add_subdirectory(Tests)
 
