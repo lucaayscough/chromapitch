@@ -14,6 +14,7 @@ juce_add_plugin(ChromaScope
                                                 # GarageBand 10.3 requires the first letter to be upper-case, and the remaining letters to be lower-case
     FORMATS AU VST3 Standalone
     PRODUCT_NAME "Chroma Scope"
+    BUNDLE_ID "com.ChromaAudio.ChromaScope"
 )                
 
 

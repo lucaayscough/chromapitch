@@ -15,6 +15,7 @@ juce_add_plugin(ChromaPitch
     FORMATS AU VST3 Standalone
     PRODUCT_NAME "Chroma Pitch"
     MICROPHONE_PERMISSION_ENABLED TRUE
+    BUNDLE_ID "com.ChromaAudio.ChromaPitch"
 )                
 
 
