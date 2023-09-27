@@ -10,20 +10,8 @@ AudioPluginAudioProcessor::AudioPluginAudioProcessor()
                       #endif
                        .withOutput ("Output", juce::AudioChannelSet::stereo(), true)
                      #endif
-                       ),
-       m_deadMansPedalFile (juce::File::getSpecialLocation (juce::File::userApplicationDataDirectory).getChildFile ("Vectors/deadMansPedalFile.txt")),
-       m_pluginDirectoryScanner (
-                        m_knownPluginList,
-                        m_audioUnitPluginFormat,
-                        m_audioUnitPluginFormat.getDefaultLocationsToSearch(),
-                        true,
-                        m_deadMansPedalFile
-                        )
+                       )
 {
-    if (m_deadMansPedalFile.create().failed())
-    {
-        throw std::runtime_error ("Error creating dead man pedal file.");
-    }
 }
 
 AudioPluginAudioProcessor::~AudioPluginAudioProcessor()

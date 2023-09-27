@@ -22,6 +22,8 @@ juce_generate_juce_header(Vectors)
 
 target_sources(Vectors
     PRIVATE
+        PluginScannerSubprocess.cpp
+        Globals.cpp
         PluginEditor.cpp
         PluginProcessor.cpp
     )
@@ -31,12 +33,15 @@ target_compile_definitions(Vectors
         JUCE_WEB_BROWSER=0
         JUCE_USE_CURL=0 
         JUCE_VST3_CAN_REPLACE_VST2=0
-        JUCE_PLUGINHOST_AU=1)
+        JUCE_PLUGINHOST_AU=1
+        JUCE_PLUGINHOST_VST=0
+        JUCE_PLUGINHOST_VST3=1)
 
 target_link_libraries(Vectors
     PRIVATE
         juce::juce_audio_utils
         juce::juce_audio_processors
+        juce::juce_audio_formats
     PUBLIC
         juce::juce_recommended_config_flags
         juce::juce_recommended_lto_flags
