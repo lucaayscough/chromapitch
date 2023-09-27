@@ -12,11 +12,11 @@ AudioPluginAudioProcessor::AudioPluginAudioProcessor()
                      #endif
                        )
 {
+    PluginScanner pluginScanner;
 }
 
 AudioPluginAudioProcessor::~AudioPluginAudioProcessor()
 {
-    PluginScanner pluginScanner;
 }
 
 //==============================================================================
