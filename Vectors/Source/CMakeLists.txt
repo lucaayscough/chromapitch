@@ -22,7 +22,7 @@ juce_generate_juce_header(Vectors)
 
 target_sources(Vectors
     PRIVATE
-        PluginScannerSubprocess.cpp
+        PluginScanner.cpp
         Globals.cpp
         PluginEditor.cpp
         PluginProcessor.cpp

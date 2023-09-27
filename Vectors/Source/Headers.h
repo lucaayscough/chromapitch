@@ -4,7 +4,7 @@
 #include "Chroma/ChromaHeader.h"
 
 #include "Globals.h"
-#include "PluginScannerSubprocess.h"
+#include "PluginScanner.h"
 
 #include "PluginProcessor.h"
 #include "PluginEditor.h"

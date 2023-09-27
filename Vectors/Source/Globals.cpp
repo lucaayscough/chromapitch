@@ -9,3 +9,4 @@
 #endif
 
 const juce::String Globals::deadMansPedalFilePath = rootPath + "deadMansPedalFile.txt";
+const juce::String Globals::knownPluginListPath = rootPath + "knownPluginList.xml";

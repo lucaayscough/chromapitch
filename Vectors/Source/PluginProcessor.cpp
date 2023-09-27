@@ -16,6 +16,7 @@ AudioPluginAudioProcessor::AudioPluginAudioProcessor()
 
 AudioPluginAudioProcessor::~AudioPluginAudioProcessor()
 {
+    PluginScanner pluginScanner;
 }
 
 //==============================================================================

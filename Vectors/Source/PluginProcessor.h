@@ -46,7 +46,6 @@ private:
     juce::KnownPluginList m_knownPluginList;
     juce::AudioUnitPluginFormat m_audioUnitPluginFormat;
     juce::File m_deadMansPedalFile;
-    //juce::PluginDirectoryScanner m_pluginDirectoryScanner;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (AudioPluginAudioProcessor)
 };
