@@ -9,6 +9,8 @@ public:
 
     void run() override;
 
+    juce::KnownPluginList& getKnownPluginList();
+
 private:
     juce::AudioUnitPluginFormat m_formatManager;
     juce::KnownPluginList m_knownPluginList;

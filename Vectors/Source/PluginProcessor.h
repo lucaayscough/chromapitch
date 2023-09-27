@@ -46,6 +46,7 @@ private:
     juce::UndoManager m_undoManager;
     juce::AudioProcessorValueTreeState m_apvts; 
     PluginScanner m_pluginScanner;
+    juce::OwnedArray<juce::AudioPluginInstance> m_plugins;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (AudioPluginAudioProcessor)
 };

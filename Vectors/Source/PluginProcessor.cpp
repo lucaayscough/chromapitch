@@ -95,6 +95,25 @@ void AudioPluginAudioProcessor::changeProgramName (int index, const juce::String
 void AudioPluginAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
     juce::ignoreUnused (sampleRate, samplesPerBlock);
+
+
+    juce::AudioPluginFormatManager formatManager;
+
+    formatManager.addDefaultFormats();
+
+    juce::PluginDescription* desc = nullptr;
+
+    for (auto& d : m_pluginScanner.getKnownPluginList().getTypes())
+    {
+        if (d.name == "AUVectorPanner")
+        {
+            desc = &d;
+            break;
+        }
+    }
+    
+    juce::String errorMessage;
+    m_plugins.add (formatManager.createPluginInstance (*desc, sampleRate, samplesPerBlock, errorMessage));
 }
 
 void AudioPluginAudioProcessor::releaseResources()

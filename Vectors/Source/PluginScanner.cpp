@@ -62,3 +62,8 @@ void PluginScanner::run()
         }
     }
 }
+
+juce::KnownPluginList& PluginScanner::getKnownPluginList()
+{
+    return m_knownPluginList;
+}
