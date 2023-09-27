@@ -43,9 +43,8 @@ public:
 
 private:
     //==============================================================================
-    juce::KnownPluginList m_knownPluginList;
-    juce::AudioUnitPluginFormat m_audioUnitPluginFormat;
-    juce::File m_deadMansPedalFile;
+    juce::UndoManager m_undoManager;
+    juce::AudioProcessorValueTreeState m_apvts; 
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (AudioPluginAudioProcessor)
 };

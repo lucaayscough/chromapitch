@@ -3,16 +3,22 @@
 
 //==============================================================================
 AudioPluginAudioProcessor::AudioPluginAudioProcessor()
-     : AudioProcessor (BusesProperties()
+     :  AudioProcessor (BusesProperties()
                      #if ! JucePlugin_IsMidiEffect
                       #if ! JucePlugin_IsSynth
                        .withInput  ("Input",  juce::AudioChannelSet::stereo(), true)
                       #endif
                        .withOutput ("Output", juce::AudioChannelSet::stereo(), true)
                      #endif
-                       )
+                       ),
+        m_apvts (
+            *this,
+            &m_undoManager,
+            "State",
+            {}
+        ) 
 {
-    PluginScanner pluginScanner;
+    //PluginScanner pluginScanner;
 }
 
 AudioPluginAudioProcessor::~AudioPluginAudioProcessor()
