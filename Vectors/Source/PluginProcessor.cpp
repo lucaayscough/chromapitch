@@ -18,11 +18,12 @@ AudioPluginAudioProcessor::AudioPluginAudioProcessor()
             {}
         ) 
 {
-    //PluginScanner pluginScanner;
+    m_pluginScanner.startThread(); 
 }
 
 AudioPluginAudioProcessor::~AudioPluginAudioProcessor()
 {
+    m_pluginScanner.stopThread(1000);
 }
 
 //==============================================================================

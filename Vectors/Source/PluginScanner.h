@@ -1,11 +1,13 @@
 #pragma once
 
 
-class PluginScanner 
+class PluginScanner : public juce::Thread 
 {
 public:
     PluginScanner();
-    ~PluginScanner();
+    ~PluginScanner() override;
+
+    void run() override;
 
 private:
     juce::AudioUnitPluginFormat m_formatManager;

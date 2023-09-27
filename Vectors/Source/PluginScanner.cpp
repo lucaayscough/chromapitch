@@ -1,8 +1,14 @@
 #include "Headers.h"
 
 
-PluginScanner::PluginScanner()
+PluginScanner::PluginScanner() : juce::Thread ("PluginScannerThread") {}
+
+PluginScanner::~PluginScanner() {}
+
+void PluginScanner::run()
 {
+    DBG ("Scanning plugins...");
+
     //m_formatManager.addDefaultFormats();
 
     m_deadMansPedalFile = Globals::deadMansPedalFilePath;
@@ -17,18 +23,16 @@ PluginScanner::PluginScanner()
         false
     );
 
-
     juce::File xmlFile = Globals::knownPluginListPath;
+
+    // Read plugin list from disk.
 
     if (xmlFile.existsAsFile())
     {
-        // Read XML from file
         std::unique_ptr<juce::XmlElement> xml = juce::XmlDocument::parse(xmlFile);
 
-        // Check if the XML is valid
         if (xml != nullptr)
         {
-            // Restore knownPluginList from XML
             m_knownPluginList.recreateFromXml(*xml);
         }
     }
@@ -43,18 +47,18 @@ PluginScanner::PluginScanner()
         DBG (fileName);
         DBG (m_pluginDirectoryScanner.getProgress());
 
+        // Save plugin list to disk.
+
         std::unique_ptr<juce::XmlElement> xml = m_knownPluginList.createXml();
 
-        // Check if the XML is not null
         if (xml != nullptr)
         {
-            // Write XML to file
-            juce::File xmlFile = (Globals::knownPluginListPath);
             xml->writeToFile(xmlFile, "");
         }
-    }
-}
 
-PluginScanner::~PluginScanner()
-{
+        if (threadShouldExit())
+        {
+            return;
+        }
+    }
 }
