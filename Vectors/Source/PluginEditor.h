@@ -10,11 +10,14 @@ public:
     void paint (juce::Graphics&) override;
     void resized() override;
 
+    void mouseDown (const juce::MouseEvent& event) override;
+
 private:
     void timerCallback() override;
 
 private:
     AudioPluginAudioProcessor& processorRef;
+    std::unique_ptr<PluginWindow> m_pluginWindow;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (AudioPluginAudioProcessorEditor)
 };

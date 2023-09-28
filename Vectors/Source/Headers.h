@@ -5,6 +5,7 @@
 
 #include "Globals.h"
 #include "PluginScanner.h"
+#include "PluginWindow.h"
 
 #include "PluginProcessor.h"
 #include "PluginEditor.h"

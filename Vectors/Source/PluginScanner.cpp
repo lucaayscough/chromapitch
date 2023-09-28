@@ -7,8 +7,6 @@ PluginScanner::~PluginScanner() {}
 
 void PluginScanner::run()
 {
-    DBG ("Scanning plugins...");
-
     //m_formatManager.addDefaultFormats();
 
     m_deadMansPedalFile = Globals::deadMansPedalFilePath;
@@ -44,8 +42,7 @@ void PluginScanner::run()
         auto fileName = m_pluginDirectoryScanner.getNextPluginFileThatWillBeScanned();
         m_pluginDirectoryScanner.scanNextFile(true, fileName);
 
-        DBG (fileName);
-        DBG (m_pluginDirectoryScanner.getProgress());
+        std::cout << "\r" << "Scanning plugins " << static_cast<int> (m_pluginDirectoryScanner.getProgress() * 100.f)  << "%: "  << fileName << std::flush; 
 
         // Save plugin list to disk.
 
@@ -61,6 +58,8 @@ void PluginScanner::run()
             return;
         }
     }
+
+    std::cout << std::endl;
 }
 
 juce::KnownPluginList& PluginScanner::getKnownPluginList()

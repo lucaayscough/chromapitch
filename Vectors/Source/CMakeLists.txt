@@ -24,6 +24,7 @@ target_sources(Vectors
     PRIVATE
         PluginScanner.cpp
         Globals.cpp
+        PluginWindow.cpp
         PluginEditor.cpp
         PluginProcessor.cpp
     )

@@ -96,7 +96,6 @@ void AudioPluginAudioProcessor::prepareToPlay (double sampleRate, int samplesPer
 {
     juce::ignoreUnused (sampleRate, samplesPerBlock);
 
-
     juce::AudioPluginFormatManager formatManager;
 
     formatManager.addDefaultFormats();
@@ -187,6 +186,12 @@ void AudioPluginAudioProcessor::setStateInformation (const void* data, int sizeI
     if (xmlState.get() != nullptr)
         if (xmlState->hasTagName (m_apvts.state.getType()))
             m_apvts.replaceState (juce::ValueTree::fromXml (*xmlState));
+}
+
+//==============================================================================
+juce::OwnedArray<juce::AudioPluginInstance>& AudioPluginAudioProcessor::getPlugins()
+{
+    return m_plugins;
 }
 
 //==============================================================================
