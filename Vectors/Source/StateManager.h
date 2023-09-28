@@ -9,15 +9,21 @@ public:
 
     void initState (juce::ValueTree state, juce::UndoManager* undoManager);
 
+    juce::ValueTree getRootEffectNode();
     void addEffectNode (juce::Point<int> position);
 
 private:
     juce::ValueTree m_state;
     juce::UndoManager* m_undoManager = nullptr;
 
+public:
     // Type identifiers.
-    juce::Identifier rootEffectNodeType = "Root_Effect_Node_Type";
-    juce::Identifier effectNodeType = "Effect_Node_Type";
+    const juce::Identifier rootEffectNodeType = "root_effect_node_type";
+    const juce::Identifier effectNodeType = "effect_node_type";
+
+    // Property identifiers.
+    const juce::Identifier posXProp = "pos_x_prop";
+    const juce::Identifier posYProp = "pos_y_prop";
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (StateManager)
 };

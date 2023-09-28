@@ -14,6 +14,17 @@ AudioPluginAudioProcessorEditor::~AudioPluginAudioProcessorEditor() {}
 void AudioPluginAudioProcessorEditor::paint (juce::Graphics& g)
 {
     g.fillAll (juce::Colours::black);
+
+    auto rootEffectNode = m_stateManager.getRootEffectNode();
+    auto numEffects = rootEffectNode.getNumChildren();
+    
+    g.setColour (juce::Colours::red);
+    for (int i = 0; i < numEffects; ++i)
+    {
+        auto effect = rootEffectNode.getChild(i);
+
+        g.fillEllipse (effect.getProperty (m_stateManager.posXProp), effect.getProperty (m_stateManager.posYProp), 50, 50);
+    }
 }
 
 void AudioPluginAudioProcessorEditor::resized() {}
