@@ -18,6 +18,7 @@ AudioPluginAudioProcessor::AudioPluginAudioProcessor()
             {}
         ) 
 {
+    m_stateManager.initState (m_apvts.state, &m_undoManager);
     m_pluginScanner.startThread(); 
 }
 
@@ -168,7 +169,7 @@ bool AudioPluginAudioProcessor::hasEditor() const
 
 juce::AudioProcessorEditor* AudioPluginAudioProcessor::createEditor()
 {
-    return new AudioPluginAudioProcessorEditor (*this);
+    return new AudioPluginAudioProcessorEditor (*this, m_stateManager);
 }
 
 //==============================================================================
@@ -177,6 +178,7 @@ void AudioPluginAudioProcessor::getStateInformation (juce::MemoryBlock& destData
     auto state = m_apvts.copyState();
     std::unique_ptr<juce::XmlElement> xml (state.createXml());
     copyXmlToBinary (*xml, destData);
+
 }
 
 void AudioPluginAudioProcessor::setStateInformation (const void* data, int sizeInBytes)
@@ -185,10 +187,18 @@ void AudioPluginAudioProcessor::setStateInformation (const void* data, int sizeI
 
     if (xmlState.get() != nullptr)
         if (xmlState->hasTagName (m_apvts.state.getType()))
+        {
             m_apvts.replaceState (juce::ValueTree::fromXml (*xmlState));
+            m_stateManager.initState (m_apvts.state, &m_undoManager);
+        }
 }
 
 //==============================================================================
+juce::ValueTree AudioPluginAudioProcessor::getValueTree()
+{
+    return m_apvts.state;
+}
+
 juce::OwnedArray<juce::AudioPluginInstance>& AudioPluginAudioProcessor::getPlugins()
 {
     return m_plugins;

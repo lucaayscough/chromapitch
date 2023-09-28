@@ -42,12 +42,16 @@ public:
     void setStateInformation (const void* data, int sizeInBytes) override;
 
     //==============================================================================
+    juce::ValueTree getValueTree();
     juce::OwnedArray<juce::AudioPluginInstance>& getPlugins();
 
 private:
     //==============================================================================
+    juce::AudioProcessorGraph m_processorGraph;
     juce::UndoManager m_undoManager;
     juce::AudioProcessorValueTreeState m_apvts; 
+    StateManager m_stateManager;
+
     PluginScanner m_pluginScanner;
     juce::OwnedArray<juce::AudioPluginInstance> m_plugins;
     

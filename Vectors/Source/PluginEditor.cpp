@@ -1,8 +1,8 @@
 #include "Headers.h"
 
 
-AudioPluginAudioProcessorEditor::AudioPluginAudioProcessorEditor (AudioPluginAudioProcessor& p)
-    : AudioProcessorEditor (&p), processorRef (p)
+AudioPluginAudioProcessorEditor::AudioPluginAudioProcessorEditor (AudioPluginAudioProcessor& p, StateManager& stateManager)
+    : AudioProcessorEditor (&p), processorRef (p), m_stateManager (stateManager)
 {
     juce::ignoreUnused (processorRef);
     setSize (1000, 800);
@@ -25,7 +25,16 @@ void AudioPluginAudioProcessorEditor::timerCallback()
 
 void AudioPluginAudioProcessorEditor::mouseDown (const juce::MouseEvent &event)
 {
-    juce::ignoreUnused (event);
-    auto& plugins = processorRef.getPlugins();
-    juce::ignoreUnused (plugins);
+    auto numClicks = event.getNumberOfClicks();
+    auto position = event.getMouseDownPosition();
+    
+    if (numClicks == 2)
+    {
+        addEffectNode (position);
+    }
+}
+
+void AudioPluginAudioProcessorEditor::addEffectNode(juce::Point<int> position)
+{
+    m_stateManager.addEffectNode (position);
 }
