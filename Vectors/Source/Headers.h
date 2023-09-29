@@ -8,5 +8,7 @@
 #include "PluginScanner.h"
 #include "PluginWindow.h"
 
+#include "NodeComponent.h"
+
 #include "PluginProcessor.h"
 #include "PluginEditor.h"

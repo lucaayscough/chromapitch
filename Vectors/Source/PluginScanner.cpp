@@ -50,7 +50,7 @@ void PluginScanner::run()
 
         if (xml != nullptr)
         {
-            xml->writeToFile(xmlFile, "");
+            xml->writeTo(xmlFile);
         }
 
         if (threadShouldExit())

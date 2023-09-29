@@ -97,6 +97,9 @@ void AudioPluginAudioProcessor::prepareToPlay (double sampleRate, int samplesPer
 {
     juce::ignoreUnused (sampleRate, samplesPerBlock);
 
+
+    // Instantiate new plugin.
+    /*
     juce::AudioPluginFormatManager formatManager;
 
     formatManager.addDefaultFormats();
@@ -114,13 +117,10 @@ void AudioPluginAudioProcessor::prepareToPlay (double sampleRate, int samplesPer
     
     juce::String errorMessage;
     m_plugins.add (formatManager.createPluginInstance (*desc, sampleRate, samplesPerBlock, errorMessage));
+    */
 }
 
-void AudioPluginAudioProcessor::releaseResources()
-{
-    // When playback stops, you can use this as an opportunity to free up any
-    // spare memory, etc.
-}
+void AudioPluginAudioProcessor::releaseResources() {}
 
 bool AudioPluginAudioProcessor::isBusesLayoutSupported (const BusesLayout& layouts) const
 {

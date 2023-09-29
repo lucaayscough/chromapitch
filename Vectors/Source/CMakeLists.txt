@@ -26,6 +26,7 @@ target_sources(Vectors
         PluginScanner.cpp
         Globals.cpp
         PluginWindow.cpp
+        NodeComponent.cpp
         PluginEditor.cpp
         PluginProcessor.cpp
     )
