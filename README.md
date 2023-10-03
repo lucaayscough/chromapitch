@@ -21,7 +21,7 @@ git clone https://github.com/chromaaudio/Chroma.git
 Move to the cloned directory:
 
 ```
-cd move/to/cloned/directory
+cd path/to/cloned/directory
 ```
 
 ```
