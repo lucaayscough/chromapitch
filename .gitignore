@@ -1,7 +1,2 @@
-.vscode/
-build/
-
-ChromaPitch/Builds
-ChromaPitch/JuceLibraryCode
-
+build
 .DS_Store
