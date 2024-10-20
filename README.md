@@ -3,7 +3,7 @@
 Chroma pitch is a real-time monophonic pitch detector with the ability to convert pitch to MPE midi data.
 
 ```
-git clone --recurse-submodules 
+git clone --recurse-submodules https://github.com/lucaayscough/chromapitch.git
 ```
 
 To build:
