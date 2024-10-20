@@ -4,3 +4,6 @@
 [submodule "extern/q"]
 	path = extern/q
 	url = https://github.com/cycfi/q
+[submodule "extern/JUCE"]
+	path = extern/JUCE
+	url = https://github.com/juce-framework/JUCE
