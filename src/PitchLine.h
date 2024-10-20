@@ -5,7 +5,7 @@ class PitchLine : public juce::Component
 {
 public:
     PitchLine();
-    ~PitchLine();
+    ~PitchLine() override;
     
     float getCurrentY();
     void update(chroma::NoteInfo& note);

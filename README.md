@@ -1,16 +1,15 @@
 # Chroma Pitch
 
-Chroma Pitch is a beautiful pitch detection audio plugin which doesn't really have anything too special about it other than it is in fact going to be very beautiful.
+Chroma pitch is a real-time monophonic pitch detector with the ability to convert pitch to MPE midi data.
 
+```
+git clone --recurse-submodules 
+```
 
-## Implemented methods:
+To build:
 
- - Yin
- - BACF
+```
+# Artefacts are located in "build/ChromaPitch_artefacts/"
+mkdir -p build && cmake -B build && cmake --build build
+```
 
-
-## Dependencies
-
- - [JUCE](https://juce.com)
- - [cycfi/q](https://github.com/cycfi/q) 
- - [cycfi/infra](https://github.com/cycfi/infra/)

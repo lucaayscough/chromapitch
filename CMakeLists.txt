@@ -17,6 +17,8 @@ message("-- Building formats: ${FORMATS}")
 project(${PLUGIN_NAME} VERSION ${PLUGIN_VERSION} LANGUAGES C CXX)
 
 add_subdirectory(extern/JUCE)
+include_directories(extern/infra/include)
+include_directories(extern/q/q_lib/include)
 
 juce_add_plugin(${PLUGIN_NAME}
   COMPANY_NAME "Chroma Audio"

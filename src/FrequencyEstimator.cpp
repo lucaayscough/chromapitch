@@ -14,7 +14,7 @@ void FrequencyEstimator::prepareToPlay(double sampleRate, float lowestFrequency,
 {
     cycfi::q::frequency lowest_freq(lowestFrequency);
     cycfi::q::frequency highest_freq(highestFrequency);
-    cycfi::q::decibel hysteresis(0);
+    cycfi::q::decibel hysteresis = cycfi::q::lin_to_db(0);
     
     m_bacf = std::make_shared<cycfi::q::pitch_detector>(lowest_freq, highest_freq, sampleRate, hysteresis);
     m_bacf2 = std::make_shared<cycfi::q::pitch_detector>(lowest_freq, highest_freq, sampleRate, hysteresis);
